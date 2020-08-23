@@ -23,15 +23,15 @@ public class BlacklistWhitelistConfig {
         server.comment("blackList or whiteList settings");
 
         useBlackList = server
-                .comment("Use either the blackList of whiteList")
+                .comment("You can choose to use either a blackList or a whiteList")
                 .define("blackListWhiteList.useBlackList", true);
 
         blackList = server
-                .comment("The blackList")
+                .comment("Disallow items for being stared at")
                 .defineList("blackListWhiteList.blackList", defaultBlackList, entry -> entry instanceof String);
 
         whiteList = server
-                .comment("The whiteList")
+                .comment("Only allow certain items to be stared at")
                 .defineList("blackListWhiteList.whiteList", defaultWhiteList, entry -> entry instanceof String);
     }
 
