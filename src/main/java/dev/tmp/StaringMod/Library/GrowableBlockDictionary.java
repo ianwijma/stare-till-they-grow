@@ -6,6 +6,7 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -17,34 +18,46 @@ public class GrowableBlockDictionary {
     // Applies growth every x seconds
     static long applyEveryXSeconds = 2;
 
-    private static final Hashtable<String, WorldBlockPos> HASHTABLE = new Hashtable<String, WorldBlockPos>();
+    // To either use the blacklist or whitelist
+    static boolean useBlacklist = true;
+    // The blacklist
+    static String[] blackList = { "minecraft:grass" };
+    // The blacklist
+    static String[] whiteList = { "minecraft:oak_sapling" };
+
+    private static final Hashtable<String, WorldBlockPos> HASHTABLE = new Hashtable<>();
 
     public static boolean register ( ServerWorld world, BlockPos blockPos ) {
         return register( new WorldBlockPos( world, blockPos ) );
     }
     public static boolean register ( WorldBlockPos worldBlockPos ) {
-        System.out.println( "Registered:" );
-        System.out.println( worldBlockPos.getBlock().toString() );
-        System.out.println( HASHTABLE.size() );
+        Block block = worldBlockPos.getBlock();
+        if ( canRegister( block ) ) {
+            String key = worldBlockPos.getKey();
 
-        String key = worldBlockPos.getKey();
-
-        if ( !HASHTABLE.containsKey( key ) ) {
-            HASHTABLE.put( key, worldBlockPos );
-            return true;
+            if ( !HASHTABLE.containsKey( key ) ) {
+                HASHTABLE.put( key, worldBlockPos );
+                return true;
+            }
         }
 
         return false;
+    }
+
+    private static boolean canRegister (Block block ) {
+        String name = block.getRegistryName().toString();
+
+        if ( useBlacklist ) {
+            return !ArrayUtils.contains( blackList, name );
+        }
+
+        return ArrayUtils.contains( whiteList, name );
     }
 
     public static boolean unregister ( ServerWorld world, BlockPos blockPos ) {
         return unregister( new WorldBlockPos( world, blockPos ) );
     }
     public static boolean unregister ( WorldBlockPos worldBlockPos ) {
-        System.out.println( "Unregistered:" );
-        System.out.println( worldBlockPos.getBlock().toString() );
-        System.out.println( HASHTABLE.size() );
-
         String key = worldBlockPos.getKey();
 
         if ( HASHTABLE.containsKey( key ) ) {
@@ -104,32 +117,38 @@ public class GrowableBlockDictionary {
                 // Check if growth was already applied
                 secondsSinceRegistration != this.lastSecondGrown
             ) {
-                this.lastSecondGrown = secondsSinceRegistration;
-                this.applyGrowth();
+                Block block = this.getBlock();
+                if (
+                    // Check if the block is growable
+                    block instanceof IGrowable
+                ) {
+                    this.lastSecondGrown = secondsSinceRegistration;
+                    this.applyGrowth( block );
+                }
             }
         }
 
-        public void applyGrowth () {
+        public void applyGrowth ( Block block ) {
+            // Extract values
             ServerWorld world = getWorld();
             BlockPos blockPos = getBlockPos();
             BlockState blockState = world.getBlockState( blockPos );
-            Block block = blockState.getBlock();
-            if ( block instanceof IGrowable ) {
-                IGrowable growable = (IGrowable) block;
-                world.spawnParticle(
-                        ParticleTypes.HAPPY_VILLAGER,
-                        blockPos.getX(),
-                        blockPos.getY(),
-                        blockPos.getZ(),
-                        75,
-                        1,
-                        1,
-                        1,
-                        1
-                );
-                growable.grow( world, world.rand, blockPos, blockState);
-                System.out.println("Growable.grow");
-            }
+
+            // Apply growth effect
+            world.spawnParticle(
+                    ParticleTypes.HAPPY_VILLAGER,
+                    blockPos.getX(),
+                    blockPos.getY(),
+                    blockPos.getZ(),
+                    75,
+                    1,
+                    1,
+                    1,
+                    1
+            );
+
+            // Grow block
+            ( (IGrowable) block ).grow( world, world.rand, blockPos, blockState);
         }
 
     }
