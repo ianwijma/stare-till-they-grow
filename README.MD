@@ -1,14 +1,20 @@
-The Stare Mod
+Stare Mod
 --
 
 Stare till your crops grow!
 
 That's it. A simple mod inspired by [Twerk Sim 2K16](https://github.com/Funwayguy/TS2K16) and mods alike.
 
-## Modpack
-You are free to use this mod in any modpack. I would love to hear if you do used it though!
+## features
 
-## Configurable settings
+Works with any bonemeal-able plants. with configurable delay and apply speed.
+
+Includes blacklist and whitelist options. 
+
+## Permissions
+You are free to use this mod in any modpack. You must also be abiding by Minecraft's EULA.
+
+## In depth settings
 
 ### Delay
 The delay in seconds before we start applying bonemeal.
