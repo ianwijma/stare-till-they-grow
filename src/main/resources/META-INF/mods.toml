@@ -15,11 +15,11 @@ issueTrackerURL="https://github.com/ianwijma/mc-staring-mod/issues" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="staringmod" #mandatory
+modId="staretilltheygrow" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 version="${file.jarVersion}" #mandatory
  # A display name for the mod
-displayName="Staring Mod" #mandatory
+displayName="Stare Till They Grow" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
 # updateJSONURL="" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
@@ -32,10 +32,10 @@ credits="Thanks for the Forge team for Forge" #optional
 authors="Ian Wijma" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Stare in the souls of your crops!
+Just stare till they grow!!
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
-[[dependencies.staringmod]] #optional
+[[dependencies.staretilltheygrow]] #optional
     # the modid of the dependency
     modId="forge" #mandatory
     # Does this dependency have to exist - if not, ordering below must be specified
@@ -47,7 +47,7 @@ Stare in the souls of your crops!
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
 # Here's another dependency
-[[dependencies.staringmod]]
+[[dependencies.staretilltheygrow]]
     modId="minecraft"
     mandatory=true
     versionRange="[1.16.2]"

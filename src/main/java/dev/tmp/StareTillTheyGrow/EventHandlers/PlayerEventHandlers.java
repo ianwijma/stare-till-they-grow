@@ -1,8 +1,8 @@
-package dev.tmp.StaringMod.EventHandlers;
+package dev.tmp.StareTillTheyGrow.EventHandlers;
 
-import dev.tmp.StaringMod.Network.Message.RegisterBlock;
-import dev.tmp.StaringMod.Network.Message.UnregisterBlock;
-import dev.tmp.StaringMod.Network.Network;
+import dev.tmp.StareTillTheyGrow.Network.Message.RegisterBlock;
+import dev.tmp.StareTillTheyGrow.Network.Message.UnregisterBlock;
+import dev.tmp.StareTillTheyGrow.Network.Network;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.Minecraft;

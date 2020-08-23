@@ -1,6 +1,6 @@
-package dev.tmp.StaringMod.EventHandlers;
+package dev.tmp.StareTillTheyGrow.EventHandlers;
 
-import dev.tmp.StaringMod.Library.GrowableBlockDictionary;
+import dev.tmp.StareTillTheyGrow.Library.GrowableBlockDictionary;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 

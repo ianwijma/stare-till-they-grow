@@ -1,7 +1,7 @@
-package dev.tmp.StaringMod.Library;
+package dev.tmp.StareTillTheyGrow.Library;
 
-import dev.tmp.StaringMod.Config.BlacklistWhitelistConfig;
-import dev.tmp.StaringMod.Config.TimingConfig;
+import dev.tmp.StareTillTheyGrow.Config.BlacklistWhitelistConfig;
+import dev.tmp.StareTillTheyGrow.Config.TimingConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;

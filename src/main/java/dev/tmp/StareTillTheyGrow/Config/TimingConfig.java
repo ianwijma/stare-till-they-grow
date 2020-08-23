@@ -1,4 +1,4 @@
-package dev.tmp.StaringMod.Config;
+package dev.tmp.StareTillTheyGrow.Config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 

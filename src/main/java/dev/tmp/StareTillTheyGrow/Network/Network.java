@@ -1,8 +1,8 @@
-package dev.tmp.StaringMod.Network;
+package dev.tmp.StareTillTheyGrow.Network;
 
-import dev.tmp.StaringMod.Network.Message.RegisterBlock;
-import dev.tmp.StaringMod.Network.Message.UnregisterBlock;
-import dev.tmp.StaringMod.StaringMod;
+import dev.tmp.StareTillTheyGrow.Network.Message.RegisterBlock;
+import dev.tmp.StareTillTheyGrow.Network.Message.UnregisterBlock;
+import dev.tmp.StareTillTheyGrow.StareTillTheyGrow;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -17,7 +17,7 @@ public class Network {
     // Create Network Instance
     public static SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             // Create research for the Channel
-            new ResourceLocation(StaringMod.MODE_ID, "main"),
+            new ResourceLocation(StareTillTheyGrow.MOD_ID, "main"),
             // Return protocol version
             () -> PROTOCOL_VERSION,
             // Client protocol version check

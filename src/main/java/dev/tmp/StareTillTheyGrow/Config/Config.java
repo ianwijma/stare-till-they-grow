@@ -1,8 +1,8 @@
-package dev.tmp.StaringMod.Config;
+package dev.tmp.StareTillTheyGrow.Config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
-import dev.tmp.StaringMod.StaringMod;
+import dev.tmp.StareTillTheyGrow.StareTillTheyGrow;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 
@@ -23,7 +23,7 @@ public class Config {
     }
 
     public static void loadConfig( ForgeConfigSpec config, String path ) {
-        StaringMod.LOGGER.info( "Loading config: " + path );
+        StareTillTheyGrow.LOGGER.info( "Loading config: " + path );
         final File file = new File( path );
         final CommentedFileConfig configFile = CommentedFileConfig.builder( file )
                 .sync()
@@ -31,13 +31,13 @@ public class Config {
                 .writingMode( WritingMode.REPLACE )
                 .build();
 
-        StaringMod.LOGGER.info( "Build config: " + path );
+        StareTillTheyGrow.LOGGER.info( "Build config: " + path );
         configFile.load();
 
-        StaringMod.LOGGER.info( "Loaded config: " + path );
+        StareTillTheyGrow.LOGGER.info( "Loaded config: " + path );
         config.setConfig( configFile );
 
-        StaringMod.LOGGER.info( "Config loaded: " + path );
+        StareTillTheyGrow.LOGGER.info( "Config loaded: " + path );
     }
 
 

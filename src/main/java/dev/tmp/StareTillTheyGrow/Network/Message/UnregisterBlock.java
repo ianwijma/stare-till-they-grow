@@ -1,6 +1,6 @@
-package dev.tmp.StaringMod.Network.Message;
+package dev.tmp.StareTillTheyGrow.Network.Message;
 
-import dev.tmp.StaringMod.Library.GrowableBlockDictionary;
+import dev.tmp.StareTillTheyGrow.Library.GrowableBlockDictionary;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;

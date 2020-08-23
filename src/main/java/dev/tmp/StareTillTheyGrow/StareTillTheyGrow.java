@@ -1,9 +1,9 @@
-package dev.tmp.StaringMod;
+package dev.tmp.StareTillTheyGrow;
 
-import dev.tmp.StaringMod.Config.Config;
-import dev.tmp.StaringMod.EventHandlers.ServerTickEventHandlers;
-import dev.tmp.StaringMod.Network.Network;
-import dev.tmp.StaringMod.EventHandlers.PlayerEventHandlers;
+import dev.tmp.StareTillTheyGrow.Config.Config;
+import dev.tmp.StareTillTheyGrow.EventHandlers.ServerTickEventHandlers;
+import dev.tmp.StareTillTheyGrow.Network.Network;
+import dev.tmp.StareTillTheyGrow.EventHandlers.PlayerEventHandlers;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -15,18 +15,18 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod("staringmod")
-public class StaringMod
+@Mod("staretilltheygrow")
+public class StareTillTheyGrow
 {
 
-    public static String MODE_ID = "staringmod";
-    public static final Logger LOGGER = LogManager.getLogger(MODE_ID);
+    public static String MOD_ID = "staretilltheygrow";
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 
-    public StaringMod() {
+    public StareTillTheyGrow() {
         // Load the config
         ModLoadingContext.get().registerConfig( ModConfig.Type.SERVER, Config.CONFIG);
-        Config.loadConfig( Config.CONFIG, FMLPaths.CONFIGDIR.get().resolve( MODE_ID + ".toml" ).toString() );
+        Config.loadConfig( Config.CONFIG, FMLPaths.CONFIGDIR.get().resolve( MOD_ID + ".toml" ).toString() );
 
         // Register listeners to minecraftEvetns
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

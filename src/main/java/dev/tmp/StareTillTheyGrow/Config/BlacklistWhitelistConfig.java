@@ -1,12 +1,9 @@
-package dev.tmp.StaringMod.Config;
+package dev.tmp.StareTillTheyGrow.Config;
 
 import com.google.common.collect.Lists;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class BlacklistWhitelistConfig {
