@@ -1,18 +1,18 @@
-Stare Mod
+Stare Till They Grow
 --
 
-Stare till your crops grow!
+Literally look at your plants to make them grow!
 
-That's it. A simple mod inspired by [Twerk Sim 2K16](https://github.com/Funwayguy/TS2K16) and mods alike.
+A mod inspired by [Twerk Sim 2K16](https://github.com/Funwayguy/TS2K16) by [Funwayguy](https://github.com/Funwayguy).
 
 ## features
 
-Works with any bonemeal-able plants. with configurable delay and apply speed.
+Works with any bonemeal-able plants. With configurable delay and apply speed.
 
 Includes blacklist and whitelist options. 
 
 ## Permissions
-You are free to use this mod in any modpack. You must also be abiding by Minecraft's EULA.
+You are free to use this mod in any modpack, You must also be abiding by Minecraft's EULA.
 
 ## In depth settings
 
