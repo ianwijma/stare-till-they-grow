@@ -5,6 +5,9 @@ Stare till your crops grow!
 
 That's it. A simple mod inspired by [Twerk Sim 2K16](https://github.com/Funwayguy/TS2K16) and mods alike.
 
+## Modpack
+You are free to use this mod in any modpack. I would love to hear if you do used it though!
+
 ## Configurable settings
 
 ### Delay
@@ -21,3 +24,4 @@ Disallow items for being stared at.
 
 ### Whitelist
 Only allow certain items to be stared at.
+
