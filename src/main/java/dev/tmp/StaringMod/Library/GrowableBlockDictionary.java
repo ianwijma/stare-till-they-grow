@@ -1,5 +1,7 @@
 package dev.tmp.StaringMod.Library;
 
+import dev.tmp.StaringMod.Config.BlacklistWhitelistConfig;
+import dev.tmp.StaringMod.Config.TimingConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
@@ -14,16 +16,16 @@ import java.util.function.BiConsumer;
 public class GrowableBlockDictionary {
 
     // The delay before applying growth
-    static long delayInSeconds = 4;
+    static long delay = TimingConfig.delay.get();
     // Applies growth every x seconds
-    static long applyEveryXSeconds = 2;
+    static long everyXSeconds = TimingConfig.everyXSeconds.get();
 
-    // To either use the blacklist or whitelist
-    static boolean useBlacklist = true;
-    // The blacklist
-    static String[] blackList = { "minecraft:grass" };
-    // The blacklist
-    static String[] whiteList = { "minecraft:oak_sapling" };
+    // To either use the blackList or whiteList
+    static boolean useBlackList = BlacklistWhitelistConfig.useBlackList.get();
+    // The blackList
+    static String[] blackList = Arrays.copyOf( BlacklistWhitelistConfig.blackList.get().toArray(), BlacklistWhitelistConfig.blackList.get().size(), String[].class );
+    // The whiteList
+    static String[] whiteList = Arrays.copyOf( BlacklistWhitelistConfig.whiteList.get().toArray(), BlacklistWhitelistConfig.whiteList.get().size(), String[].class );
 
     private static final Hashtable<String, WorldBlockPos> HASHTABLE = new Hashtable<>();
 
@@ -47,7 +49,7 @@ public class GrowableBlockDictionary {
     private static boolean canRegister (Block block ) {
         String name = block.getRegistryName().toString();
 
-        if ( useBlacklist ) {
+        if (useBlackList) {
             return !ArrayUtils.contains( blackList, name );
         }
 
@@ -111,9 +113,9 @@ public class GrowableBlockDictionary {
             long secondsSinceRegistration = this.getSecondsSinceRegistration();
             if (
                 // Check if it has been longer then 2 seconds
-                secondsSinceRegistration > delayInSeconds &&
+                secondsSinceRegistration > delay &&
                 // Check if it has already been time
-                ( secondsSinceRegistration % applyEveryXSeconds ) == 0 &&
+                ( secondsSinceRegistration % everyXSeconds) == 0 &&
                 // Check if growth was already applied
                 secondsSinceRegistration != this.lastSecondGrown
             ) {
