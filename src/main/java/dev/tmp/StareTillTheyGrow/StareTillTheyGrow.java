@@ -25,8 +25,7 @@ public class StareTillTheyGrow
 
     public StareTillTheyGrow() {
         // Load the config
-        ModLoadingContext.get().registerConfig( ModConfig.Type.SERVER, Config.CONFIG);
-        Config.loadConfig( Config.CONFIG, FMLPaths.CONFIGDIR.get().resolve( MOD_ID + ".toml" ).toString() );
+        ModLoadingContext.get().registerConfig( ModConfig.Type.COMMON, Config.COMMON_SPEC);
 
         // Register listeners to minecraftEvetns
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

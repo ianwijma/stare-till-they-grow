@@ -1,7 +1,6 @@
 package dev.tmp.StareTillTheyGrow.Library;
 
-import dev.tmp.StareTillTheyGrow.Config.BlacklistWhitelistConfig;
-import dev.tmp.StareTillTheyGrow.Config.TimingConfig;
+import dev.tmp.StareTillTheyGrow.Config.Config;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
@@ -16,16 +15,16 @@ import java.util.function.BiConsumer;
 public class GrowableBlockDictionary {
 
     // The delay before applying growth
-    static long delay = TimingConfig.delay.get();
+    static long delay = Config.COMMON.delay.get();
     // Applies growth every x seconds
-    static long everyXSeconds = TimingConfig.everyXSeconds.get();
+    static long everyXSeconds = Config.COMMON.everyXSeconds.get();
 
     // To either use the blackList or whiteList
-    static boolean useBlackList = BlacklistWhitelistConfig.useBlackList.get();
+    static boolean useBlackList = Config.COMMON.useBlackList.get();
     // The blackList
-    static String[] blackList = Arrays.copyOf( BlacklistWhitelistConfig.blackList.get().toArray(), BlacklistWhitelistConfig.blackList.get().size(), String[].class );
+    static String[] blackList = Arrays.copyOf( Config.COMMON.blackList.get().toArray(), Config.COMMON.blackList.get().size(), String[].class );
     // The whiteList
-    static String[] whiteList = Arrays.copyOf( BlacklistWhitelistConfig.whiteList.get().toArray(), BlacklistWhitelistConfig.whiteList.get().size(), String[].class );
+    static String[] whiteList = Arrays.copyOf( Config.COMMON.whiteList.get().toArray(), Config.COMMON.whiteList.get().size(), String[].class );
 
     private static final Hashtable<String, WorldBlockPos> HASHTABLE = new Hashtable<>();
 
