@@ -13,7 +13,10 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.0.0'
+ext.configFile = file('build.properties')
+ext.config = parseConfig(configFile)
+
+version = "${config.mc_version}-${config.mod_version}"
 group = 'dev.tmp.staretilltheygrow' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'staretilltheygrow'
 
@@ -143,5 +146,17 @@ publishing {
         maven {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
+    }
+}
+
+def parseConfig(File config) {
+    if(config.exists()){
+        config.withReader {
+            def prop = new Properties()
+            prop.load(it)
+            return (new ConfigSlurper().parse(prop))
+        }
+    } else {
+        return null
     }
 }
