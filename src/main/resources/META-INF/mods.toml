@@ -11,7 +11,7 @@ loaderVersion="[33,)" #mandatory This is typically bumped every Minecraft versio
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
 license="All rights reserved"
 # A URL to refer people to when problems occur with this mod
-issueTrackerURL="https://github.com/ianwijma/mc-staring-mod/issues" #optional
+issueTrackerURL="https://staretilltheygrow.tmp.dev/issues" #optional
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
@@ -23,7 +23,7 @@ displayName="Stare Till They Grow" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
 # updateJSONURL="" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="https://github.com/ianwijma/mc-staring-mod" #optional
+displayURL="https://staretilltheygrow.tmp.dev" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="logo.png" #optional
 # A text field displayed in the mod UI
@@ -32,7 +32,7 @@ credits="Thanks for the Forge team for Forge" #optional
 authors="Ian Wijma" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Just stare till they grow!!
+Don't be like Bob, Just Stare Till They Grow!!
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.staretilltheygrow]] #optional

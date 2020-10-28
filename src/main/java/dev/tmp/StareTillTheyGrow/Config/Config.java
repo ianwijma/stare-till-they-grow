@@ -2,44 +2,82 @@ package dev.tmp.StareTillTheyGrow.Config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import com.google.common.collect.Lists;
 import dev.tmp.StareTillTheyGrow.StareTillTheyGrow;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class Config {
 
-    private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-    public static final ForgeConfigSpec CONFIG;
+    public static class Client {
+        public Client ( ForgeConfigSpec.Builder builder ) {
+            // Unused for now
+        }
+    }
 
+    public static final Client CLIENT;
+    public static final ForgeConfigSpec CLIENT_SPEC;
     static {
-        BlacklistWhitelistConfig.init( BUILDER );
-
-        TimingConfig.init( BUILDER );
-
-        CONFIG = BUILDER.build();
+        final Pair<Client, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Client::new);
+        CLIENT_SPEC = specPair.getRight();
+        CLIENT = specPair.getLeft();
     }
 
-    public static void loadConfig( ForgeConfigSpec config, String path ) {
-        StareTillTheyGrow.LOGGER.info( "Loading config: " + path );
-        final File file = new File( path );
-        final CommentedFileConfig configFile = CommentedFileConfig.builder( file )
-                .sync()
-                .autosave()
-                .writingMode( WritingMode.REPLACE )
-                .build();
+    public static class Common {
+        // The growth delay
+        public static ForgeConfigSpec.IntValue delay;
+        // The apply rate
+        public static ForgeConfigSpec.IntValue everyXSeconds;
+        // Either use the blacklist of whitelist
+        public static ForgeConfigSpec.BooleanValue useBlackList;
+        // The blacklist
+        public static ForgeConfigSpec.ConfigValue<List<? extends String>> blackList;
+        private final static ArrayList<String> defaultBlackList = Lists.newArrayList( "minecraft:grass" );
+        // The whitelist
+        public static ForgeConfigSpec.ConfigValue<List<? extends String>> whiteList;
+        private final static ArrayList<String> defaultWhiteList = Lists.newArrayList();
 
-        StareTillTheyGrow.LOGGER.info( "Build config: " + path );
-        configFile.load();
+        public Common ( ForgeConfigSpec.Builder builder ) {
+            builder.comment("Delay and apply rate").push("timings");
+            delay = builder
+                    .comment("The delay in seconds before we start applying bonemeal")
+                    .defineInRange("timing.delay", 2, 1, 60);
 
-        StareTillTheyGrow.LOGGER.info( "Loaded config: " + path );
-        config.setConfig( configFile );
+            everyXSeconds = builder
+                    .comment("The time in seconds between each applying of bonemeal")
+                    .defineInRange("timing.everyXSeconds", 1, 1, 60);
+            builder.pop();
 
-        StareTillTheyGrow.LOGGER.info( "Config loaded: " + path );
+
+            builder.comment("blackList or whiteList settings").push("blacklistwhitelist");
+            useBlackList = builder
+                    .comment("You can choose to use either a blackList or a whiteList")
+                    .define("blackListWhiteList.useBlackList", true);
+
+            blackList = builder
+                    .comment("Disallow items for being stared at")
+                    .defineList("blackListWhiteList.blackList", defaultBlackList, entry -> entry instanceof String);
+
+            whiteList = builder
+                    .comment("Only allow certain items to be stared at")
+                    .defineList("blackListWhiteList.whiteList", defaultWhiteList, entry -> entry instanceof String);
+            builder.pop();
+
+        }
     }
 
-
+    public static final Common COMMON;
+    public static final ForgeConfigSpec COMMON_SPEC;
+    static {
+        final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+        COMMON_SPEC = specPair.getRight();
+        COMMON = specPair.getLeft();
+    }
 
 }
