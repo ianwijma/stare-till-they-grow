@@ -32,7 +32,7 @@ credits="Thanks for the Forge team for Forge" #optional
 authors="Ian Wijma" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Don't be like Bob, Just Stare Till They Grow!!
+Don't be like Bob, just stare till they grow!!
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.staretilltheygrow]] #optional
@@ -50,6 +50,6 @@ Don't be like Bob, Just Stare Till They Grow!!
 [[dependencies.staretilltheygrow]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.3]"
+    versionRange="[1.16.4]"
     ordering="NONE"
     side="BOTH"
