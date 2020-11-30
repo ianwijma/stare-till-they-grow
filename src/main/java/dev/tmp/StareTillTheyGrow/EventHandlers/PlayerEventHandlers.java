@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -30,8 +31,7 @@ public class PlayerEventHandlers {
             unregister();
         } else if ( lookingAt.getType() == RayTraceResult.Type.BLOCK ) {
             // Get the blockPos
-            Vector3d vec = lookingAt.getHitVec();
-            BlockPos blockPos = new BlockPos( vec.x, vec.y, vec.z );
+            BlockPos blockPos = ((BlockRayTraceResult) lookingAt).getPos();
 
             if ( null == previousBlockPos && isGrowable( blockPos, event ) ) {
                 // Check if the th
