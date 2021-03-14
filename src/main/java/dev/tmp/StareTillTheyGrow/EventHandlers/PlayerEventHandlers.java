@@ -25,19 +25,22 @@ public class PlayerEventHandlers {
     @SubscribeEvent
     public void lookedAtGrowableEvent ( FOVUpdateEvent event ) {
         // Get the target
-        RayTraceResult lookingAt = Minecraft.getInstance().objectMouseOver;
+        RayTraceResult lookingAt = Minecraft.getInstance().hitResult;
 
         if ( null == lookingAt ) {
             unregister();
         } else if ( lookingAt.getType() == RayTraceResult.Type.BLOCK ) {
+            System.out.println("Looking at block");
             // Get the blockPos
-            BlockPos blockPos = ((BlockRayTraceResult) lookingAt).getPos();
+            BlockPos blockPos = ((BlockRayTraceResult) lookingAt).getBlockPos();
 
-            if ( null == previousBlockPos && isGrowable( blockPos, event ) ) {
+            boolean growable = isGrowable( blockPos, event );
+
+            if ( null == previousBlockPos && growable ) {
                 // Check if the th
                 register( blockPos );
             } else if ( blockPosChanged( blockPos ) ) {
-                if ( isGrowable( blockPos, event ) ) {
+                if ( growable ) {
                     register( blockPos );
                 } else {
                     unregister();
@@ -67,12 +70,12 @@ public class PlayerEventHandlers {
 
     private boolean isGrowable ( BlockPos blockPos, FOVUpdateEvent event ) {
         // Get the block state
-        World world = event.getEntity().world;
+        World world = event.getEntity().level;
         BlockState blockState = world.getBlockState( blockPos );
         // Check if the block is Growable
         if ( blockState.getBlock() instanceof IGrowable ) {
             IGrowable iGrowable = (IGrowable) blockState.getBlock();
-            if ( iGrowable.canGrow(world, blockPos, blockState, world.isRemote) ) {
+            if ( iGrowable.isValidBonemealTarget(world, blockPos, blockState, world.isClientSide) ) {
                 return true;
             }
         }

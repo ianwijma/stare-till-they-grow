@@ -136,7 +136,7 @@ public class GrowableBlockDictionary {
             BlockState blockState = world.getBlockState( blockPos );
 
             // Apply growth effect
-            world.spawnParticle(
+            world.sendParticles(
                     ParticleTypes.HAPPY_VILLAGER,
                     blockPos.getX(),
                     blockPos.getY(),
@@ -149,7 +149,7 @@ public class GrowableBlockDictionary {
             );
 
             // Grow block
-            ( (IGrowable) block ).grow( world, world.rand, blockPos, blockState);
+            ( (IGrowable) block ).performBonemeal( world, world.random, blockPos, blockState);
         }
 
     }
