@@ -58,7 +58,7 @@ public class UnregisterBlock {
                 // Get the player who send the command
                 ServerPlayerEntity player = ctx.get().getSender();
                 if ( null != player ) {
-                    ServerWorld world = player.getServerWorld();
+                    ServerWorld world = player.server.overworld();
                     BlockPos blockPos = registerBlock.getBlockPos();
                     GrowableBlockDictionary.unregister( world, blockPos );
                 }

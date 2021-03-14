@@ -35,7 +35,7 @@ public class Network {
 
     // Sends a message from the server to a player
     public static void sendTo(ServerPlayerEntity player, Object msg) {
-        INSTANCE.sendTo(msg, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
+        INSTANCE.sendTo(msg, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
     // Sends a message from a player to the server
