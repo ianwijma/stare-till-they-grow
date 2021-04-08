@@ -1,14 +1,10 @@
 package dev.tmp.StareTillTheyGrow.Config;
 
-import com.electronwill.nightconfig.core.file.CommentedFileConfig;
-import com.electronwill.nightconfig.core.io.WritingMode;
 import com.google.common.collect.Lists;
-import dev.tmp.StareTillTheyGrow.StareTillTheyGrow;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +31,8 @@ public class Config {
         // The apply rate
         public static ForgeConfigSpec.IntValue everyXSeconds;
         // Either use the blacklist of whitelist
+        public static ForgeConfigSpec.BooleanValue shiftToActivate;
+        // Either use the blacklist of whitelist
         public static ForgeConfigSpec.BooleanValue useBlackList;
         // The blacklist
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> blackList;
@@ -52,6 +50,12 @@ public class Config {
             everyXSeconds = builder
                     .comment("The time in seconds between each applying of bonemeal")
                     .defineInRange("timing.everyXSeconds", 1, 1, 60);
+            builder.pop();
+
+            builder.comment("General settings").push("general");
+            shiftToActivate = builder
+                    .comment("If you need to bend over (hold shift) to activate your staring powers")
+                    .define("general.shiftToActivate", false);
             builder.pop();
 
 

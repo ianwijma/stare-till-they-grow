@@ -1,5 +1,6 @@
 package dev.tmp.StareTillTheyGrow.EventHandlers;
 
+import dev.tmp.StareTillTheyGrow.Config.Config;
 import dev.tmp.StareTillTheyGrow.Network.Message.RegisterBlock;
 import dev.tmp.StareTillTheyGrow.Network.Message.UnregisterBlock;
 import dev.tmp.StareTillTheyGrow.Network.Network;
@@ -9,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,12 +25,15 @@ public class PlayerEventHandlers {
     @SubscribeEvent
     public void lookedAtGrowableEvent ( FOVUpdateEvent event ) {
         // Get the target
-        RayTraceResult lookingAt = Minecraft.getInstance().hitResult;
+        Minecraft minecraftInstance = Minecraft.getInstance();
+        RayTraceResult lookingAt = minecraftInstance.hitResult;
 
-        if ( null == lookingAt ) {
+        boolean shiftToActivate = Config.COMMON.shiftToActivate.get();
+        boolean playerActivation = !shiftToActivate || minecraftInstance.player.isShiftKeyDown();
+
+        if ( !playerActivation || null == lookingAt ) {
             unregister();
-        } else if ( lookingAt.getType() == RayTraceResult.Type.BLOCK ) {
-            System.out.println("Looking at block");
+        } else if ( playerActivation && lookingAt.getType() == RayTraceResult.Type.BLOCK ) {
             // Get the blockPos
             BlockPos blockPos = ((BlockRayTraceResult) lookingAt).getBlockPos();
 
