@@ -16,18 +16,21 @@ You are free to use this mod in any modpack, You must also be abiding by Minecra
 
 ## In depth settings
 
-### Delay
+### shiftToActivate (default: false)
+Only enable this mod when bending over (holding shift).
+
+### Delay (default: 2)
 The delay in seconds before we start applying bonemeal.
 
-### Every x Seconds
+### Every x Seconds (default: 1)
 The time in seconds between each applying of bonemeal.
 
-### Use black or whitelist
+### Use black or whitelist (default: blacklist)
 You can choose to use either a blacklist or a whitelist.
 
-### Blacklist
+### Blacklist (default: [minecraft:grass])
 Disallow items for being stared at.
 
-### Whitelist
+### Whitelist (default: [])
 Only allow certain items to be stared at.
 
