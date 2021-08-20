@@ -1,11 +1,11 @@
 package dev.tmp.StareTillTheyGrow.Network.Message;
 
 import dev.tmp.StareTillTheyGrow.Library.GrowableBlockDictionary;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.function.Supplier;
 
@@ -34,14 +34,14 @@ public class RegisterBlock {
     }
 
     // The encoding before sending
-    public static void encode( RegisterBlock msg, PacketBuffer buf ) {
+    public static void encode( RegisterBlock msg, FriendlyByteBuf buf ) {
         buf.writeDouble( msg.x );
         buf.writeDouble( msg.y );
         buf.writeDouble( msg.z );
     }
 
     // The decoding after receiving.
-    public static RegisterBlock decode(PacketBuffer buf) {
+    public static RegisterBlock decode(FriendlyByteBuf buf) {
         double x = buf.readDouble();
         double y = buf.readDouble();
         double z = buf.readDouble();
@@ -56,9 +56,9 @@ public class RegisterBlock {
             // Enqueue the task
             context.enqueueWork(() -> {
                 // Get the player who send the command
-                ServerPlayerEntity player = ctx.get().getSender();
+                ServerPlayer player = ctx.get().getSender();
                 if ( null != player ) {
-                    ServerWorld world = player.server.overworld();
+                    ServerLevel world = player.server.overworld();
                     BlockPos blockPos = registerBlock.getBlockPos();
                     GrowableBlockDictionary.register( world, blockPos );
                 }

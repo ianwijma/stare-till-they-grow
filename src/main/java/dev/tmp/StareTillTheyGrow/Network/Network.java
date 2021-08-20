@@ -3,11 +3,11 @@ package dev.tmp.StareTillTheyGrow.Network;
 import dev.tmp.StareTillTheyGrow.Network.Message.RegisterBlock;
 import dev.tmp.StareTillTheyGrow.Network.Message.UnregisterBlock;
 import dev.tmp.StareTillTheyGrow.StareTillTheyGrow;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.fmllegacy.network.NetworkDirection;
+import net.minecraftforge.fmllegacy.network.NetworkRegistry;
+import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
 
 public class Network {
 
@@ -34,7 +34,7 @@ public class Network {
     }
 
     // Sends a message from the server to a player
-    public static void sendTo(ServerPlayerEntity player, Object msg) {
+    public static void sendTo(ServerPlayer player, Object msg) {
         INSTANCE.sendTo(msg, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }
 

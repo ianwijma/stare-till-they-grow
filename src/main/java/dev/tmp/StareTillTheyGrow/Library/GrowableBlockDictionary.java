@@ -1,12 +1,12 @@
 package dev.tmp.StareTillTheyGrow.Library;
 
 import dev.tmp.StareTillTheyGrow.Config.Config;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IGrowable;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;
@@ -28,7 +28,7 @@ public class GrowableBlockDictionary {
 
     private static final Hashtable<String, WorldBlockPos> HASHTABLE = new Hashtable<>();
 
-    public static boolean register ( ServerWorld world, BlockPos blockPos ) {
+    public static boolean register (ServerLevel world, BlockPos blockPos ) {
         return register( new WorldBlockPos( world, blockPos ) );
     }
     public static boolean register ( WorldBlockPos worldBlockPos ) {
@@ -55,7 +55,7 @@ public class GrowableBlockDictionary {
         return ArrayUtils.contains( whiteList, name );
     }
 
-    public static boolean unregister ( ServerWorld world, BlockPos blockPos ) {
+    public static boolean unregister ( ServerLevel world, BlockPos blockPos ) {
         return unregister( new WorldBlockPos( world, blockPos ) );
     }
     public static boolean unregister ( WorldBlockPos worldBlockPos ) {
@@ -75,12 +75,12 @@ public class GrowableBlockDictionary {
 
     public static class WorldBlockPos {
 
-        private final ServerWorld world;
+        private final ServerLevel world;
         private final BlockPos blockPos;
         private final Date createdDate;
         private long lastSecondGrown;
 
-        public WorldBlockPos ( ServerWorld world, BlockPos blockPos ) {
+        public WorldBlockPos ( ServerLevel world, BlockPos blockPos ) {
             this.world = world;
             this.blockPos = blockPos;
             this.createdDate = new Date();
@@ -92,7 +92,7 @@ public class GrowableBlockDictionary {
             return (now-created)/1000;
         }
 
-        private ServerWorld getWorld() {
+        private ServerLevel getWorld() {
             return world;
         }
 
@@ -121,7 +121,7 @@ public class GrowableBlockDictionary {
                 Block block = this.getBlock();
                 if (
                     // Check if the block is growable
-                    block instanceof IGrowable
+                    block instanceof BonemealableBlock
                 ) {
                     this.lastSecondGrown = secondsSinceRegistration;
                     this.applyGrowth( block );
@@ -130,26 +130,32 @@ public class GrowableBlockDictionary {
         }
 
         public void applyGrowth ( Block block ) {
-            // Extract values
-            ServerWorld world = getWorld();
-            BlockPos blockPos = getBlockPos();
-            BlockState blockState = world.getBlockState( blockPos );
+            BonemealableBlock targetBlock = (BonemealableBlock) block;
 
-            // Apply growth effect
-            world.sendParticles(
-                    ParticleTypes.HAPPY_VILLAGER,
-                    blockPos.getX(),
-                    blockPos.getY(),
-                    blockPos.getZ(),
-                    75,
-                    1,
-                    1,
-                    1,
-                    1
-            );
+            if(targetBlock.isValidBonemealTarget(world, blockPos, world.getBlockState(blockPos), world.isClientSide)) {
+                // Extract values
+                ServerLevel world = getWorld();
+                BlockPos blockPos = getBlockPos();
+                BlockState blockState = world.getBlockState( blockPos );
 
-            // Grow block
-            ( (IGrowable) block ).performBonemeal( world, world.random, blockPos, blockState);
+                // Apply growth effect
+                world.sendParticles(
+                        ParticleTypes.HAPPY_VILLAGER,
+                        blockPos.getX(),
+                        blockPos.getY(),
+                        blockPos.getZ(),
+                        75,
+                        1,
+                        1,
+                        1,
+                        1
+                );
+
+                // Grow block
+                ( (BonemealableBlock) block ).performBonemeal( world, world.random, blockPos, blockState);
+            } else {
+                unregister(world, blockPos);
+            }
         }
 
     }
