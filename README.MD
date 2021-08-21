@@ -5,7 +5,7 @@ Literally look at your plants to make them grow!
 
 A mod inspired by [Twerk Sim 2K16](https://github.com/Funwayguy/TS2K16) by [Funwayguy](https://github.com/Funwayguy).
 
-### Preview video
+### Preview video (click image)
 [![Stare Till They Grow!](https://img.youtube.com/vi/8oO2xrJ-KZU/0.jpg)](https://www.youtube.com/watch?v=8oO2xrJ-KZU)
 
 ## features
