@@ -1,7 +1,8 @@
 package dev.tmp.StareTillTheyGrow.Network;
 
 import dev.tmp.StareTillTheyGrow.Network.Message.RegisterBlock;
-import dev.tmp.StareTillTheyGrow.Network.Message.UnregisterBlock;
+import dev.tmp.StareTillTheyGrow.Network.Message.RegisterEntity;
+import dev.tmp.StareTillTheyGrow.Network.Message.Unregister;
 import dev.tmp.StareTillTheyGrow.StareTillTheyGrow;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,7 +31,8 @@ public class Network {
     public static void init() {
         int id = 0;
         INSTANCE.registerMessage(id++, RegisterBlock.class, RegisterBlock::encode, RegisterBlock::decode, RegisterBlock::handle);
-        INSTANCE.registerMessage(id++, UnregisterBlock.class, UnregisterBlock::encode, UnregisterBlock::decode, UnregisterBlock::handle);
+        INSTANCE.registerMessage(id++, RegisterEntity.class, RegisterEntity::encode, RegisterEntity::decode, RegisterEntity::handle);
+        INSTANCE.registerMessage(id++, Unregister.class, Unregister::encode, Unregister::decode, Unregister::handle);
     }
 
     // Sends a message from the server to a player
