@@ -80,11 +80,11 @@ public class Config {
                     .define("blackListWhiteList.useBlackList", true);
 
             blackList = builder
-                    .comment("Disallow items for being stared at")
+                    .comment("Disallow blocks to be stared at")
                     .defineList("blackListWhiteList.blackList", defaultBlackList, entry -> entry instanceof String);
 
             whiteList = builder
-                    .comment("Only allow certain items to be stared at")
+                    .comment("Only allow certain blocks to be stared at")
                     .defineList("blackListWhiteList.whiteList", defaultWhiteList, entry -> entry instanceof String);
             builder.pop();
 
