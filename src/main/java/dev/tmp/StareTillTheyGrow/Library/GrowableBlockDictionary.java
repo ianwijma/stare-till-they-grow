@@ -130,26 +130,30 @@ public class GrowableBlockDictionary {
         }
 
         public void applyGrowth ( Block block ) {
-            // Extract values
-            ServerWorld world = getWorld();
-            BlockPos blockPos = getBlockPos();
-            BlockState blockState = world.getBlockState( blockPos );
+            IGrowable targetBlock = (IGrowable) block;
 
-            // Apply growth effect
-            world.sendParticles(
-                    ParticleTypes.HAPPY_VILLAGER,
-                    blockPos.getX(),
-                    blockPos.getY(),
-                    blockPos.getZ(),
-                    75,
-                    1,
-                    1,
-                    1,
-                    1
-            );
+            if(targetBlock.isValidBonemealTarget(world, blockPos, world.getBlockState(blockPos), world.isClientSide)) {
+                // Extract values
+                ServerWorld world = getWorld();
+                BlockPos blockPos = getBlockPos();
+                BlockState blockState = world.getBlockState( blockPos );
 
-            // Grow block
-            ( (IGrowable) block ).performBonemeal( world, world.random, blockPos, blockState);
+                // Apply growth effect
+                world.sendParticles(
+                        ParticleTypes.HAPPY_VILLAGER,
+                        blockPos.getX(),
+                        blockPos.getY(),
+                        blockPos.getZ(),
+                        75,
+                        1,
+                        1,
+                        1,
+                        1
+                );
+
+                // Grow block
+                targetBlock.performBonemeal( world, world.random, blockPos, blockState);
+            }
         }
 
     }
