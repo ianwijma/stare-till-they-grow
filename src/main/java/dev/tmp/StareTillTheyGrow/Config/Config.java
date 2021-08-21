@@ -50,26 +50,26 @@ public class Config {
         public Common ( ForgeConfigSpec.Builder builder ) {
             builder.comment("Delay and apply rate").push("timings");
             delay = builder
-                    .comment("The delay in seconds before we start applying bonemeal")
+                    .comment("The delay in seconds before we start growing")
                     .defineInRange("timing.delay", 2, 1, 60);
 
             everyXSeconds = builder
-                    .comment("The time in seconds between each applying of bonemeal")
+                    .comment("The time in seconds between each grow application")
                     .defineInRange("timing.everyXSeconds", 1, 1, 60);
             builder.pop();
 
             builder.comment("General settings").push("general");
             shiftToActivate = builder
-                    .comment("If you need to bend over (hold shift) to activate your staring powers")
+                    .comment("If you need to hold shift (bend over) to activate your staring powers")
                     .define("general.shiftToActivate", false);
             applyBoneMeal = builder
-                    .comment("If staring at plants can apply bone meal")
+                    .comment("If staring at plants applies bone meal")
                     .define("general.applyBoneMeal", true);
             growBabies = builder
-                    .comment("If staring at baby animals can grow them")
+                    .comment("If staring at baby animals makes them grow")
                     .define("general.growBabies", true);
             regrowWool = builder
-                    .comment("If staring at sheared sheep can grow their wool back")
+                    .comment("If staring at sheared sheep makes their wool grow back")
                     .define("general.regrowWool", true);
             builder.pop();
 
