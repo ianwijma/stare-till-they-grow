@@ -2,6 +2,7 @@ package dev.tmp.StareTillTheyGrow.EventHandlers;
 
 import dev.tmp.StareTillTheyGrow.Config.Config;
 import dev.tmp.StareTillTheyGrow.Library.ActionType;
+import dev.tmp.StareTillTheyGrow.Library.ActionTypeHelper;
 import dev.tmp.StareTillTheyGrow.Network.Message.RegisterBlock;
 import dev.tmp.StareTillTheyGrow.Network.Message.RegisterEntity;
 import dev.tmp.StareTillTheyGrow.Network.Message.Unregister;
@@ -10,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -18,6 +20,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.common.IForgeShearable;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nullable;
@@ -88,12 +91,21 @@ public class PlayerEventHandlers {
 
 
     private boolean handleEntityHitEvent(EntityHitResult hit) {
-        Entity targetEntity = hit.getEntity();
-        UUID entityUuid = targetEntity.getUUID();
+        Entity entity = hit.getEntity();
+        UUID entityUuid = entity.getUUID();
 
-        if(targetEntity instanceof Animal) {
-            registerEntity(ActionType.REGROW_WOOL, entityUuid);
-            return true;
+        if(entity instanceof Animal) {
+            Animal animal = (Animal) entity;
+            if(animal.isBaby()) {
+                registerEntity(ActionType.GROW_UP, entityUuid);
+                return true;
+            } else if(animal instanceof Sheep) {
+                Sheep sheep = (Sheep) animal;
+                if(sheep.isSheared()) {
+                    registerEntity(ActionType.REGROW_WOOL, entityUuid);
+                    return true;
+                }
+            }
         }
 
         return false;
@@ -105,19 +117,23 @@ public class PlayerEventHandlers {
 
     private void registerBlock(ActionType actionType, BlockPos pos) {
         // Register the new block if needed
-        if(actionTypeChanges(actionType) || blockPosChanged(pos)) {
-            Network.sendToServer(new RegisterBlock( actionType, pos ));
-            previousActionType = actionType;
-            previousBlockPos = pos;
+        if(ActionTypeHelper.actionTypeEnabled(actionType)) {
+            if(actionTypeChanges(actionType) || blockPosChanged(pos)) {
+                Network.sendToServer(new RegisterBlock( actionType, pos ));
+                previousActionType = actionType;
+                previousBlockPos = pos;
+            }
         }
     }
 
     private void registerEntity(ActionType actionType, UUID uuid) {
         // Register the new entity
-        if(actionTypeChanges(actionType) || entityUuidChanged(uuid)) {
-            Network.sendToServer(new RegisterEntity( actionType, uuid ));
-            previousActionType = actionType;
-            previousEntityUuid = uuid;
+        if(ActionTypeHelper.actionTypeEnabled(actionType)) {
+            if(actionTypeChanges(actionType) || entityUuidChanged(uuid)) {
+                Network.sendToServer(new RegisterEntity( actionType, uuid ));
+                previousActionType = actionType;
+                previousEntityUuid = uuid;
+            }
         }
     }
 

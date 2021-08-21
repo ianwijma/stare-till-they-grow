@@ -32,6 +32,12 @@ public class Config {
         public static ForgeConfigSpec.IntValue everyXSeconds;
         // Either use the blacklist of whitelist
         public static ForgeConfigSpec.BooleanValue shiftToActivate;
+        // Enable/disable bone meal effect
+        public static ForgeConfigSpec.BooleanValue applyBoneMeal;
+        // Enable/disable growing of babies
+        public static ForgeConfigSpec.BooleanValue growBabies;
+        // Enable/disable regrowing of wool
+        public static ForgeConfigSpec.BooleanValue regrowWool;
         // Either use the blacklist of whitelist
         public static ForgeConfigSpec.BooleanValue useBlackList;
         // The blacklist
@@ -56,6 +62,15 @@ public class Config {
             shiftToActivate = builder
                     .comment("If you need to bend over (hold shift) to activate your staring powers")
                     .define("general.shiftToActivate", false);
+            applyBoneMeal = builder
+                    .comment("If staring at plants can apply bone meal")
+                    .define("general.applyBoneMeal", true);
+            growBabies = builder
+                    .comment("If staring at baby animals can grow them")
+                    .define("general.growBabies", true);
+            regrowWool = builder
+                    .comment("If staring at sheared sheep can grow their wool back")
+                    .define("general.regrowWool", true);
             builder.pop();
 
 
