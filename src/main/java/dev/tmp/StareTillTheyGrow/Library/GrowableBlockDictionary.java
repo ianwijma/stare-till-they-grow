@@ -153,8 +153,6 @@ public class GrowableBlockDictionary {
 
                 // Grow block
                 ( (BonemealableBlock) block ).performBonemeal( world, world.random, blockPos, blockState);
-            } else {
-                unregister(world, blockPos);
             }
         }
 
