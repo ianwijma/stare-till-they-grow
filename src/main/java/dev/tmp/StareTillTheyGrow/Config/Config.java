@@ -32,11 +32,17 @@ public class Config {
         public static ForgeConfigSpec.IntValue everyXSeconds;
         // Either use the blacklist of whitelist
         public static ForgeConfigSpec.BooleanValue shiftToActivate;
+        // Enable/disable bone meal effect
+        public static ForgeConfigSpec.BooleanValue applyBoneMeal;
+        // Enable/disable growing of babies
+        public static ForgeConfigSpec.BooleanValue growBabies;
+        // Enable/disable regrowing of wool
+        public static ForgeConfigSpec.BooleanValue regrowWool;
         // Either use the blacklist of whitelist
         public static ForgeConfigSpec.BooleanValue useBlackList;
         // The blacklist
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> blackList;
-        private final static ArrayList<String> defaultBlackList = Lists.newArrayList( "minecraft:grass" );
+        private final static ArrayList<String> defaultBlackList = Lists.newArrayList( "minecraft:grass_block" );
         // The whitelist
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> whiteList;
         private final static ArrayList<String> defaultWhiteList = Lists.newArrayList();
@@ -44,18 +50,27 @@ public class Config {
         public Common ( ForgeConfigSpec.Builder builder ) {
             builder.comment("Delay and apply rate").push("timings");
             delay = builder
-                    .comment("The delay in seconds before we start applying bonemeal")
+                    .comment("The delay in seconds before we start growing")
                     .defineInRange("timing.delay", 2, 1, 60);
 
             everyXSeconds = builder
-                    .comment("The time in seconds between each applying of bonemeal")
+                    .comment("The time in seconds between each grow application")
                     .defineInRange("timing.everyXSeconds", 1, 1, 60);
             builder.pop();
 
             builder.comment("General settings").push("general");
             shiftToActivate = builder
-                    .comment("If you need to bend over (hold shift) to activate your staring powers")
+                    .comment("If you need to hold shift (bend over) to activate your staring powers")
                     .define("general.shiftToActivate", false);
+            applyBoneMeal = builder
+                    .comment("If staring at plants applies bone meal")
+                    .define("general.applyBoneMeal", true);
+            growBabies = builder
+                    .comment("If staring at baby animals makes them grow")
+                    .define("general.growBabies", true);
+            regrowWool = builder
+                    .comment("If staring at sheared sheep makes their wool grow back")
+                    .define("general.regrowWool", true);
             builder.pop();
 
 
@@ -65,11 +80,11 @@ public class Config {
                     .define("blackListWhiteList.useBlackList", true);
 
             blackList = builder
-                    .comment("Disallow items for being stared at")
+                    .comment("Disallow blocks to be stared at")
                     .defineList("blackListWhiteList.blackList", defaultBlackList, entry -> entry instanceof String);
 
             whiteList = builder
-                    .comment("Only allow certain items to be stared at")
+                    .comment("Only allow certain blocks to be stared at")
                     .defineList("blackListWhiteList.whiteList", defaultWhiteList, entry -> entry instanceof String);
             builder.pop();
 

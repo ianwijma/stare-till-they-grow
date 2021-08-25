@@ -2,39 +2,29 @@ package dev.tmp.StareTillTheyGrow.Network.Message;
 
 import dev.tmp.StareTillTheyGrow.Library.ActionType;
 import dev.tmp.StareTillTheyGrow.Library.PlayerTargetDictionary;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+
+import java.util.UUID;
 import java.util.function.Supplier;
 
-public class RegisterBlock {
+public class RegisterEntity {
 
     private final ActionType actionType;
-    private final double x;
-    private final double y;
-    private final double z;
+    private final UUID entityUuid;
 
     // Initialize with given x,y,z positions
-    public RegisterBlock(ActionType actionType, double x, double y, double z) {
+    public RegisterEntity(ActionType actionType, UUID entityUuid) {
         this.actionType = actionType;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.entityUuid = entityUuid;
     }
 
-    // Initialize with BlockPos
-    public RegisterBlock(ActionType actionType, BlockPos blockPos) {
-        this.actionType = actionType;
-        this.x = blockPos.getX();
-        this.y = blockPos.getY();
-        this.z = blockPos.getZ();
-    }
-
-    public BlockPos getBlockPos() {
-        return new BlockPos(this.x, this.y, this.z);
+    public UUID getEntityUuid() {
+        return this.entityUuid;
     }
 
     public ActionType getActionType() {
@@ -42,24 +32,20 @@ public class RegisterBlock {
     }
 
     // The encoding before sending
-    public static void encode(RegisterBlock msg, PacketBuffer buf) {
+    public static void encode(RegisterEntity msg, PacketBuffer buf) {
         buf.writeEnum(msg.actionType);
-        buf.writeDouble(msg.x);
-        buf.writeDouble(msg.y);
-        buf.writeDouble(msg.z);
+        buf.writeUUID(msg.entityUuid);
     }
 
     // The decoding after receiving.
-    public static RegisterBlock decode(PacketBuffer buf) {
+    public static RegisterEntity decode(PacketBuffer buf) {
         ActionType actionType = buf.readEnum(ActionType.class);
-        double x = buf.readDouble();
-        double y = buf.readDouble();
-        double z = buf.readDouble();
-        return new RegisterBlock(actionType, x, y, z);
+        UUID entityUuid = buf.readUUID();
+        return new RegisterEntity(actionType, entityUuid);
     }
 
     // Handing the received data
-    public static void handle(final RegisterBlock registerBlock, final Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(final RegisterEntity registerBlock, final Supplier<NetworkEvent.Context> ctx) {
         NetworkEvent.Context context = ctx.get();
         // Check if this is server sided
         if (context.getDirection().getReceptionSide().isServer()) {
@@ -69,9 +55,10 @@ public class RegisterBlock {
                 ServerPlayerEntity player = ctx.get().getSender();
                 if (null != player) {
                     ServerWorld world = player.server.overworld();
-                    BlockPos blockPos = registerBlock.getBlockPos();
+                    UUID entityUuid = registerBlock.getEntityUuid();
+                    Entity entity = world.getEntity(entityUuid);
                     ActionType actionType = registerBlock.getActionType();
-                    PlayerTargetDictionary.registerBlock(actionType, world, player, blockPos);
+                    PlayerTargetDictionary.registerEntity(actionType, world, player, entity);
                 }
             });
         }
