@@ -38,6 +38,8 @@ public class Config {
         public static ForgeConfigSpec.BooleanValue growBabies;
         // Enable/disable regrowing of wool
         public static ForgeConfigSpec.BooleanValue regrowWool;
+        // Enable/disable making animals fall in love
+        public static ForgeConfigSpec.BooleanValue fallInLove;
         // Either use the blacklist of whitelist
         public static ForgeConfigSpec.BooleanValue useBlackList;
         // The blacklist
@@ -71,6 +73,9 @@ public class Config {
             regrowWool = builder
                     .comment("If staring at sheared sheep makes their wool grow back")
                     .define("general.regrowWool", true);
+            fallInLove = builder
+                    .comment("If staring at a animal makes them fall in love")
+                    .define("general.fallInLove", true);
             builder.pop();
 
 
