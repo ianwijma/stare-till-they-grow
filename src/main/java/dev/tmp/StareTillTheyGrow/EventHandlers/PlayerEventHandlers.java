@@ -15,6 +15,7 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.CakeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -84,6 +85,9 @@ public class PlayerEventHandlers {
                 registerBonemealableBlock(pos);
                 return true;
             }
+        } else if (block instanceof CakeBlock) {
+            registerCakeBlock(pos);
+            return true;
         }
 
         return false;
@@ -115,6 +119,10 @@ public class PlayerEventHandlers {
 
     private void registerBonemealableBlock(BlockPos pos) {
         registerBlock(ActionType.BONE_MEAL_BLOCK, pos);
+    }
+
+    private void registerCakeBlock(BlockPos pos) {
+        registerBlock(ActionType.CAKE_REGROWTH, pos);
     }
 
     private void registerBlock(ActionType actionType, BlockPos pos) {
