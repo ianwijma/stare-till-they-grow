@@ -99,14 +99,12 @@ public class PlayerEventHandlers {
             if(animal.isBaby()) {
                 registerEntity(ActionType.GROW_UP, entityUuid);
                 return true;
-            }
-            if(animal.canFallInLove()) {
-                registerEntity(ActionType.FALL_IN_LOVE, entityUuid);
-                return true;
-            } else if(animal instanceof Sheep) {
-                Sheep sheep = (Sheep) animal;
-                if(sheep.isSheared()) {
+            } else {
+                if(animal instanceof Sheep && ((Sheep) animal).isSheared()) {
                     registerEntity(ActionType.REGROW_WOOL, entityUuid);
+                    return true;
+                } else if(animal.canFallInLove()) {
+                    registerEntity(ActionType.FALL_IN_LOVE, entityUuid);
                     return true;
                 }
             }
