@@ -3,6 +3,7 @@ package dev.tmp.StareTillTheyGrow.Library;
 import dev.tmp.StareTillTheyGrow.Config.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -129,9 +131,26 @@ public class PlayerTargetDictionary {
         protected void tick() {
         }
 
-        protected void showParticles(double posX, double posY, double posZ) {
+        protected void showParticles(BlockPos pos, SimpleParticleType particleType) {
+            this.showParticles(
+                pos.getX(),
+                pos.getY(),
+                pos.getZ(),
+                particleType
+            );
+        }
+
+        protected void showParticles(Vec3 pos, SimpleParticleType particleType) {
+            this.showParticles(
+                pos.x,
+                pos.y,
+                pos.z,particleType
+            );
+        }
+
+        protected void showParticles(double posX, double posY, double posZ, SimpleParticleType particleType) {
             world.sendParticles(
-                    ParticleTypes.HAPPY_VILLAGER,
+                    particleType,
                     posX,
                     posY,
                     posZ,
@@ -164,7 +183,7 @@ public class PlayerTargetDictionary {
             if (block instanceof BonemealableBlock) {
                 BonemealableBlock targetBlock = (BonemealableBlock) block;
                 if (targetBlock.isValidBonemealTarget(world, pos, state, world.isClientSide)) {
-                    showParticles(pos.getX(), pos.getY(), pos.getZ());
+                    showParticles(pos, ParticleTypes.HAPPY_VILLAGER);
                     targetBlock.performBonemeal(world, world.random, pos, state);
                 }
             }
@@ -182,8 +201,23 @@ public class PlayerTargetDictionary {
         protected void tick() {
             if (this.actionType == ActionType.GROW_UP) {
                 this.applyGrowth();
+            } else if (this.actionType == ActionType.FALL_IN_LOVE) {
+                this.applyFallInLove();
             } else if (this.actionType == ActionType.REGROW_WOOL) {
                 this.applyRegrowWool();
+            }
+        }
+
+        private void applyFallInLove() {
+            if (entity instanceof Animal) {
+                Animal targetEntity = (Animal) entity;
+                int age = targetEntity.getAge();
+                if (!this.world.isClientSide && age == 0 && targetEntity.canFallInLove()) {
+                    Vec3 pos = targetEntity.position();
+                    showParticles(pos, ParticleTypes.HEART);
+                    targetEntity.setInLove(player);
+                    this.world.gameEvent(entity, GameEvent.MOB_INTERACT, new BlockPos(pos));
+                }
             }
         }
 
@@ -192,7 +226,7 @@ public class PlayerTargetDictionary {
                 Animal targetEntity = (Animal) entity;
                 if (targetEntity.isBaby()) {
                     Vec3 pos = targetEntity.position();
-                    showParticles(pos.x, pos.y, pos.z);
+                    showParticles(pos, ParticleTypes.HAPPY_VILLAGER);
                     targetEntity.ageUp(60 * 5);
                 }
             }
@@ -203,7 +237,7 @@ public class PlayerTargetDictionary {
                 Sheep targetEntity = (Sheep) entity;
                 if (targetEntity.isSheared()) {
                     Vec3 pos = targetEntity.position();
-                    showParticles(pos.x, pos.y, pos.z);
+                    showParticles(pos, ParticleTypes.HAPPY_VILLAGER);
                     targetEntity.setSheared(false);
                 }
             }
