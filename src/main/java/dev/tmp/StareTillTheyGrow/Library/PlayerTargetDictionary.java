@@ -11,6 +11,7 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.CakeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
@@ -175,6 +176,9 @@ public class PlayerTargetDictionary {
             if (this.actionType == ActionType.BONE_MEAL_BLOCK) {
                 this.applyBoneMeal();
             }
+            if (this.actionType == ActionType.CAKE_REGROWTH) {
+                this.applyCakeRegrowth();
+            }
         }
 
         private void applyBoneMeal() {
@@ -185,6 +189,18 @@ public class PlayerTargetDictionary {
                 if (targetBlock.isValidBonemealTarget(world, pos, state, world.isClientSide)) {
                     showParticles(pos, ParticleTypes.HAPPY_VILLAGER);
                     targetBlock.performBonemeal(world, world.random, pos, state);
+                }
+            }
+        }
+
+        private void applyCakeRegrowth() {
+            BlockState state = world.getBlockState(pos);
+            Block block = state.getBlock();
+            if (block instanceof CakeBlock) {
+                int bites = state.getValue(CakeBlock.BITES);
+                if(bites > 0) {
+                    showParticles(pos, ParticleTypes.HAPPY_VILLAGER);
+                    this.world.setBlock(this.pos, state.setValue(CakeBlock.BITES, bites-1), 3);
                 }
             }
         }

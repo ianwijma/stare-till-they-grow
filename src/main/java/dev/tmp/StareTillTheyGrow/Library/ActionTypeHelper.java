@@ -7,6 +7,7 @@ public class ActionTypeHelper {
         return actionType == ActionType.FALL_IN_LOVE && Config.COMMON.fallInLove.get() ||
                 actionType == ActionType.BONE_MEAL_BLOCK && Config.COMMON.applyBoneMeal.get() ||
                 actionType == ActionType.REGROW_WOOL && Config.COMMON.regrowWool.get() ||
-                actionType == ActionType.GROW_UP && Config.COMMON.growBabies.get();
+                actionType == ActionType.GROW_UP && Config.COMMON.growBabies.get()||
+                actionType == ActionType.CAKE_REGROWTH && Config.COMMON.cakeRegrowth.get();
     }
 }
