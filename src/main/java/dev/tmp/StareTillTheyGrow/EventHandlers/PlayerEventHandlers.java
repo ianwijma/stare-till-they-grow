@@ -22,6 +22,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.common.IForgeShearable;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nullable;
@@ -88,6 +89,9 @@ public class PlayerEventHandlers {
         } else if (block instanceof CakeBlock) {
             registerCakeBlock(pos);
             return true;
+        } else if (block instanceof IPlantable) {
+            registerPlant(pos);
+            return true;
         }
 
         return false;
@@ -123,6 +127,10 @@ public class PlayerEventHandlers {
 
     private void registerCakeBlock(BlockPos pos) {
         registerBlock(ActionType.CAKE_REGROWTH, pos);
+    }
+
+    private void registerPlant(BlockPos pos) {
+        registerBlock(ActionType.GROW_PLANT, pos);
     }
 
     private void registerBlock(ActionType actionType, BlockPos pos) {

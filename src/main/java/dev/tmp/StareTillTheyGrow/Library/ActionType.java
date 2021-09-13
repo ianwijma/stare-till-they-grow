@@ -7,6 +7,7 @@ public enum ActionType {
     BONE_MEAL_BLOCK,
     REGROW_WOOL,
     GROW_UP,
-    CAKE_REGROWTH
+    CAKE_REGROWTH,
+    GROW_PLANT
 }
 

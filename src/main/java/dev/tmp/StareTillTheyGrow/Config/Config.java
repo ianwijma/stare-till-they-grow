@@ -42,6 +42,8 @@ public class Config {
         public static ForgeConfigSpec.BooleanValue fallInLove;
         // Enable/disable Making cake regrow pieces
         public static ForgeConfigSpec.BooleanValue cakeRegrowth;
+        // Enable/disable Growing of plants
+        public static ForgeConfigSpec.BooleanValue growPlant;
         // Either use the blacklist of whitelist
         public static ForgeConfigSpec.BooleanValue useBlackList;
         // The blacklist
@@ -81,6 +83,9 @@ public class Config {
             cakeRegrowth = builder
                     .comment("If staring at cake makes it regrow pieces")
                     .define("general.cakeRegrowth", true);
+            growPlant = builder
+                    .comment("If staring at a plant makes it grow")
+                    .define("general.growPlant", true);
             builder.pop();
 
 

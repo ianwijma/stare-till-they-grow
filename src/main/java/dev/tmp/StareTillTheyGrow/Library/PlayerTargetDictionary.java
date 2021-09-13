@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.CakeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.IPlantable;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
@@ -179,6 +180,9 @@ public class PlayerTargetDictionary {
             if (this.actionType == ActionType.CAKE_REGROWTH) {
                 this.applyCakeRegrowth();
             }
+            if (this.actionType == ActionType.GROW_PLANT) {
+                this.applyPlantGrowth();
+            }
         }
 
         private void applyBoneMeal() {
@@ -201,6 +205,25 @@ public class PlayerTargetDictionary {
                 if(bites > 0) {
                     showParticles(pos, ParticleTypes.HAPPY_VILLAGER);
                     this.world.setBlock(this.pos, state.setValue(CakeBlock.BITES, bites-1), 3);
+                }
+            }
+        }
+
+        private void applyPlantGrowth() {
+            BlockState state = world.getBlockState(this.pos);
+            Block block = state.getBlock();
+            if (block instanceof IPlantable) {
+                // Find next empty block above current
+                BlockPos emptyBlockPos = this.pos.above();
+                while(!this.world.isEmptyBlock(emptyBlockPos)) {
+                    emptyBlockPos = emptyBlockPos.above();
+                }
+
+                // Check if it isn't higher than the max build height
+                if(emptyBlockPos.getY() < this.world.getMaxBuildHeight()) {
+                    showParticles(this.pos, ParticleTypes.HAPPY_VILLAGER);
+                    this.world.setBlockAndUpdate(emptyBlockPos, block.defaultBlockState());
+                    this.world.getBlockState(emptyBlockPos).tick(this.world, emptyBlockPos, this.world.getRandom());
                 }
             }
         }
