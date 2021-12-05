@@ -20,8 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.client.event.FOVUpdateEvent;
-import net.minecraftforge.common.IForgeShearable;
+import net.minecraftforge.client.event.FOVModifierEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nullable;
@@ -41,7 +40,7 @@ public class PlayerEventHandlers {
 
 
     @SubscribeEvent
-    public void lookAroundEvent(FOVUpdateEvent event) {
+    public void lookAroundEvent(FOVModifierEvent event) {
         if(shouldHandleEvent()) {
             HitResult hit = getHitResult();
             if(!handleHitEvent(hit)) {
