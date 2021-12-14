@@ -46,7 +46,7 @@ public class Config {
         public static ForgeConfigSpec.BooleanValue useBlackList;
         // The blacklist
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> blackList;
-        private final static ArrayList<String> defaultBlackList = Lists.newArrayList( "minecraft:grass_block" );
+        private final static ArrayList<String> defaultBlackList = Lists.newArrayList( "minecraft:grass_block", "minecraft:grass", "minecraft:tall_grass" );
         // The whitelist
         public static ForgeConfigSpec.ConfigValue<List<? extends String>> whiteList;
         private final static ArrayList<String> defaultWhiteList = Lists.newArrayList();

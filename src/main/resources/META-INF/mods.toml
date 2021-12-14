@@ -50,6 +50,6 @@ Don't be like Bob, just stare till they grow!!
 [[dependencies.staretilltheygrow]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.18.0]"
+    versionRange="[1.18.1]"
     ordering="NONE"
     side="BOTH"
