@@ -48,7 +48,7 @@ public class PlayerTargetDictionary {
         Block block = state.getBlock();
         String name = block.getRegistryName().toString();
 
-        if (ActionTypeHelper.actionTypeEnabled(actionType)) {
+        if (actionType.enabled()) {
             if (useBlackList) {
                 return !ArrayUtils.contains(blackList, name);
             }
@@ -68,7 +68,7 @@ public class PlayerTargetDictionary {
     }
 
     private static boolean canRegisterEntity(ActionType actionType) {
-        return ActionTypeHelper.actionTypeEnabled(actionType);
+        return actionType.enabled();
     }
 
     public static void unregister(Player player) {
