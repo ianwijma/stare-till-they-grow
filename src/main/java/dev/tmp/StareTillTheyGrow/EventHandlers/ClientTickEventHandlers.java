@@ -1,4 +1,4 @@
-package dev.tmp.StareTillTheyGrow.Client;
+package dev.tmp.StareTillTheyGrow.EventHandlers;
 
 import dev.tmp.StareTillTheyGrow.Config.Config;
 import dev.tmp.StareTillTheyGrow.Library.ActionType;
@@ -29,7 +29,7 @@ import java.util.UUID;
 
 @ParametersAreNonnullByDefault
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public final class ClientEventHandlers {
+public final class ClientTickEventHandlers {
 
     private static @Nullable
     BlockPos previousBlockPos = null;

@@ -1,6 +1,5 @@
 package dev.tmp.StareTillTheyGrow;
 
-import dev.tmp.StareTillTheyGrow.Client.ClientEventHandlers;
 import dev.tmp.StareTillTheyGrow.Config.Config;
 import dev.tmp.StareTillTheyGrow.EventHandlers.ServerTickEventHandlers;
 import dev.tmp.StareTillTheyGrow.Network.Network;
