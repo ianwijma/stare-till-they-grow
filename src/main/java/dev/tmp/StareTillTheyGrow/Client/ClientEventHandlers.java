@@ -3,6 +3,7 @@ package dev.tmp.StareTillTheyGrow.Client;
 import dev.tmp.StareTillTheyGrow.Config.Config;
 import dev.tmp.StareTillTheyGrow.Library.ActionType;
 import dev.tmp.StareTillTheyGrow.Network.Message.RegisterBlock;
+import dev.tmp.StareTillTheyGrow.Network.Message.RegisterEntity;
 import dev.tmp.StareTillTheyGrow.Network.Message.Unregister;
 import dev.tmp.StareTillTheyGrow.Network.Network;
 import net.minecraft.client.Minecraft;
@@ -16,8 +17,10 @@ import net.minecraft.world.level.block.CakeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -25,18 +28,20 @@ import java.util.Objects;
 import java.util.UUID;
 
 @ParametersAreNonnullByDefault
-public class PlayerEventHandlers {
+@Mod.EventBusSubscriber(Dist.CLIENT)
+public final class ClientEventHandlers {
 
-    private final Minecraft minecraft = Minecraft.getInstance();
-    private @Nullable
+    private static @Nullable
     BlockPos previousBlockPos = null;
-    private @Nullable
+    private static @Nullable
     ActionType previousActionType = null;
-    private @Nullable
+    private static @Nullable
     UUID previousEntityUuid = null;
 
     @SubscribeEvent
-    public void clientTickEvent(TickEvent.ClientTickEvent event) {
+    public static void clientTickEvent(TickEvent.ClientTickEvent event) {
+        Minecraft minecraft = Minecraft.getInstance();
+
         // Only run when in a world or connected to a server
         if (minecraft.level == null) return;
 
@@ -58,7 +63,7 @@ public class PlayerEventHandlers {
         }
     }
 
-    private boolean handleBlockHit(Level level, BlockHitResult blockHitResult) {
+    private static boolean handleBlockHit(Level level, BlockHitResult blockHitResult) {
         BlockPos blockPos = blockHitResult.getBlockPos();
         BlockState blockState = level.getBlockState(blockPos);
 
@@ -79,7 +84,7 @@ public class PlayerEventHandlers {
         return false;
     }
 
-    private boolean handleEntityHit(Level level, EntityHitResult entityHitResult) {
+    private static boolean handleEntityHit(Level level, EntityHitResult entityHitResult) {
         Entity entity = entityHitResult.getEntity();
         UUID entityUuid = entity.getUUID();
 
@@ -99,7 +104,7 @@ public class PlayerEventHandlers {
         return false;
     }
 
-    private void registerBlock(ActionType actionType, BlockPos pos) {
+    private static void registerBlock(ActionType actionType, BlockPos pos) {
         if (actionType.enabled() && ((actionTypeChanged(actionType) || blockPosChanged(pos)))) {
             Network.sendToServer(new RegisterBlock(actionType, pos));
             previousActionType = actionType;
@@ -107,12 +112,16 @@ public class PlayerEventHandlers {
         }
     }
 
-    private void registerEntity(ActionType actionType, UUID uuid) {
-
+    private static void registerEntity(ActionType actionType, UUID uuid) {
+        if (actionType.enabled() && ((actionTypeChanged(actionType) || entityUuidChanged(uuid)))) {
+            Network.sendToServer(new RegisterEntity(actionType, uuid));
+            previousActionType = actionType;
+            previousEntityUuid = uuid;
+        }
     }
 
     @SuppressWarnings("InstantiationOfUtilityClass")
-    private void unregisterAll() {
+    private static void unregisterAll() {
         Network.sendToServer(new Unregister());
         previousActionType = null;
         previousBlockPos = null;
@@ -122,15 +131,15 @@ public class PlayerEventHandlers {
     // Methods retained for minimal file changes; will be condensed later
     // Null checks & proper comparison all covered in #equals
 
-    private boolean blockPosChanged(BlockPos currentBlockPos) {
+    private static boolean blockPosChanged(BlockPos currentBlockPos) {
         return !currentBlockPos.equals(previousBlockPos);
     }
 
-    private boolean entityUuidChanged(UUID currentEntityUuid) {
+    private static boolean entityUuidChanged(UUID currentEntityUuid) {
         return !currentEntityUuid.equals(previousEntityUuid);
     }
 
-    private boolean actionTypeChanged(ActionType currentActionType) {
+    private static boolean actionTypeChanged(ActionType currentActionType) {
         return !currentActionType.equals(previousActionType);
     }
 

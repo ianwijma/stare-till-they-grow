@@ -1,6 +1,6 @@
 package dev.tmp.StareTillTheyGrow;
 
-import dev.tmp.StareTillTheyGrow.Client.PlayerEventHandlers;
+import dev.tmp.StareTillTheyGrow.Client.ClientEventHandlers;
 import dev.tmp.StareTillTheyGrow.Config.Config;
 import dev.tmp.StareTillTheyGrow.EventHandlers.ServerTickEventHandlers;
 import dev.tmp.StareTillTheyGrow.Network.Network;
@@ -32,7 +32,6 @@ public class StareTillTheyGrow
 
         // Register events handlers against the Minecraft Forge events bus
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
-        forgeEventBus.register( new PlayerEventHandlers() );
         forgeEventBus.register( new ServerTickEventHandlers() );
     }
 
