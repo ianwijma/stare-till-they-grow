@@ -6,6 +6,7 @@ import dev.tmp.StareTillTheyGrow.Network.Message.RegisterBlock;
 import dev.tmp.StareTillTheyGrow.Network.Message.RegisterEntity;
 import dev.tmp.StareTillTheyGrow.Network.Message.Unregister;
 import dev.tmp.StareTillTheyGrow.Network.Network;
+import dev.tmp.StareTillTheyGrow.StareTillTheyGrow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -28,7 +29,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @ParametersAreNonnullByDefault
-@Mod.EventBusSubscriber(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = StareTillTheyGrow.MOD_ID, value = Dist.CLIENT)
 public final class ClientTickEventHandlers {
 
     private static @Nullable

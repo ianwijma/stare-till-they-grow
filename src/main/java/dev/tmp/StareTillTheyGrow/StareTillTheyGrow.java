@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 public class StareTillTheyGrow
 {
 
-    public static String MOD_ID = "staretilltheygrow";
+    public static final String MOD_ID = "staretilltheygrow";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 
