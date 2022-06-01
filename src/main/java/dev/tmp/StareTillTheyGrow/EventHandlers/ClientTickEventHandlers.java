@@ -129,9 +129,6 @@ public final class ClientTickEventHandlers {
         previousEntityUuid = null;
     }
 
-    // Methods retained for minimal file changes; will be condensed later
-    // Null checks & proper comparison all covered in #equals
-
     private static boolean blockPosChanged(BlockPos currentBlockPos) {
         return !currentBlockPos.equals(previousBlockPos);
     }

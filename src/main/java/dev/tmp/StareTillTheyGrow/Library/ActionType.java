@@ -20,5 +20,5 @@ public enum ActionType {
         return configValue.get();
     }
 
-    }
+}
 
