@@ -26,30 +26,32 @@ public class Config {
     }
 
     public static class Common {
+        // Defaults
+        private static final ArrayList<String> defaultBlackList = Lists.newArrayList( "minecraft:grass_block", "minecraft:grass", "minecraft:tall_grass" );
+        private static final ArrayList<String> defaultWhiteList = Lists.newArrayList();
+
         // The growth delay
-        public static ForgeConfigSpec.IntValue delay;
+        public ForgeConfigSpec.IntValue delay;
         // The apply rate
-        public static ForgeConfigSpec.IntValue everyXSeconds;
+        public ForgeConfigSpec.IntValue everyXSeconds;
         // Either use the blacklist of whitelist
-        public static ForgeConfigSpec.BooleanValue shiftToActivate;
+        public ForgeConfigSpec.BooleanValue shiftToActivate;
         // Enable/disable bone meal effect
-        public static ForgeConfigSpec.BooleanValue applyBoneMeal;
+        public ForgeConfigSpec.BooleanValue applyBoneMeal;
         // Enable/disable growing of babies
-        public static ForgeConfigSpec.BooleanValue growBabies;
+        public ForgeConfigSpec.BooleanValue growBabies;
         // Enable/disable regrowing of wool
-        public static ForgeConfigSpec.BooleanValue regrowWool;
+        public ForgeConfigSpec.BooleanValue regrowWool;
         // Enable/disable making animals fall in love
-        public static ForgeConfigSpec.BooleanValue fallInLove;
+        public ForgeConfigSpec.BooleanValue fallInLove;
         // Enable/disable Making cake regrow pieces
-        public static ForgeConfigSpec.BooleanValue cakeRegrowth;
+        public ForgeConfigSpec.BooleanValue cakeRegrowth;
         // Either use the blacklist of whitelist
-        public static ForgeConfigSpec.BooleanValue useBlackList;
+        public ForgeConfigSpec.BooleanValue useBlackList;
         // The blacklist
-        public static ForgeConfigSpec.ConfigValue<List<? extends String>> blackList;
-        private final static ArrayList<String> defaultBlackList = Lists.newArrayList( "minecraft:grass_block", "minecraft:grass", "minecraft:tall_grass" );
+        public ForgeConfigSpec.ConfigValue<List<? extends String>> blackList;
         // The whitelist
-        public static ForgeConfigSpec.ConfigValue<List<? extends String>> whiteList;
-        private final static ArrayList<String> defaultWhiteList = Lists.newArrayList();
+        public ForgeConfigSpec.ConfigValue<List<? extends String>> whiteList;
 
         public Common ( ForgeConfigSpec.Builder builder ) {
             builder.comment("Delay and apply rate").push("timings");

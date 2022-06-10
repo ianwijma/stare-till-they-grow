@@ -3,7 +3,6 @@ package dev.tmp.StareTillTheyGrow;
 import dev.tmp.StareTillTheyGrow.Config.Config;
 import dev.tmp.StareTillTheyGrow.EventHandlers.ServerTickEventHandlers;
 import dev.tmp.StareTillTheyGrow.Network.Network;
-import dev.tmp.StareTillTheyGrow.EventHandlers.PlayerEventHandlers;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -11,7 +10,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 public class StareTillTheyGrow
 {
 
-    public static String MOD_ID = "staretilltheygrow";
+    public static final String MOD_ID = "staretilltheygrow";
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 
@@ -33,7 +31,6 @@ public class StareTillTheyGrow
 
         // Register events handlers against the Minecraft Forge events bus
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
-        forgeEventBus.register( new PlayerEventHandlers() );
         forgeEventBus.register( new ServerTickEventHandlers() );
     }
 
