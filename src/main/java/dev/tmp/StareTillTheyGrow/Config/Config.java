@@ -27,7 +27,7 @@ public class Config {
 
     public static class Common {
         // Defaults
-        private static final ArrayList<String> defaultBlackList = Lists.newArrayList( "minecraft:grass_block", "minecraft:grass", "minecraft:tall_grass" );
+        private static final ArrayList<String> defaultBlackList = Lists.newArrayList( "minecraft:blocks/grass_block", "minecraft:blocks/grass" );
         private static final ArrayList<String> defaultWhiteList = Lists.newArrayList();
 
         // The growth delay

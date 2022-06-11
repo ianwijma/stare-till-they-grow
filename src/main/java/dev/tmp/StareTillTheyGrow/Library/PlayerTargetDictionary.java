@@ -9,9 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.CakeBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
@@ -46,7 +44,7 @@ public class PlayerTargetDictionary {
     private static boolean canRegisterBlock(ActionType actionType, ServerLevel world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        String name = block.getRegistryName().toString();
+        String name = block.getLootTable().toString();
 
         if (actionType.enabled()) {
             if (useBlackList) {
@@ -184,8 +182,7 @@ public class PlayerTargetDictionary {
         private void applyBoneMeal() {
             BlockState state = world.getBlockState(pos);
             Block block = state.getBlock();
-            if (block instanceof BonemealableBlock) {
-                BonemealableBlock targetBlock = (BonemealableBlock) block;
+            if (block instanceof BonemealableBlock targetBlock) {
                 if (targetBlock.isValidBonemealTarget(world, pos, state, world.isClientSide)) {
                     showParticles(pos, ParticleTypes.HAPPY_VILLAGER);
                     targetBlock.performBonemeal(world, world.random, pos, state);
@@ -225,21 +222,19 @@ public class PlayerTargetDictionary {
         }
 
         private void applyFallInLove() {
-            if (entity instanceof Animal) {
-                Animal targetEntity = (Animal) entity;
+            if (entity instanceof Animal targetEntity) {
                 int age = targetEntity.getAge();
                 if (!this.world.isClientSide && age == 0 && targetEntity.canFallInLove()) {
                     Vec3 pos = targetEntity.position();
                     showParticles(pos, ParticleTypes.HEART);
                     targetEntity.setInLove(player);
-                    this.world.gameEvent(entity, GameEvent.MOB_INTERACT, new BlockPos(pos));
+                    this.world.gameEvent(entity, GameEvent.ENTITY_INTERACT, new BlockPos(pos));
                 }
             }
         }
 
         private void applyGrowth() {
-            if (entity instanceof Animal) {
-                Animal targetEntity = (Animal) entity;
+            if (entity instanceof Animal targetEntity) {
                 if (targetEntity.isBaby()) {
                     Vec3 pos = targetEntity.position();
                     showParticles(pos, ParticleTypes.HAPPY_VILLAGER);
@@ -249,8 +244,7 @@ public class PlayerTargetDictionary {
         }
 
         private void applyRegrowWool() {
-            if (entity instanceof Sheep) {
-                Sheep targetEntity = (Sheep) entity;
+            if (entity instanceof Sheep targetEntity) {
                 if (targetEntity.isSheared()) {
                     Vec3 pos = targetEntity.position();
                     showParticles(pos, ParticleTypes.HAPPY_VILLAGER);
