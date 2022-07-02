@@ -16,6 +16,8 @@ public class StareTillTheyGrow
 
         // TODO: [actions] Tick based action instead of time based
 
+        // TODO: [particles] Particles are not centered
+
         // TODO: [config] More organised config
 
         // TODO: [config] Better whitelist / blacklist (block & entities)
