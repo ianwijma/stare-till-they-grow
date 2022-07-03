@@ -51,7 +51,7 @@ public final class ClientTickEventHandler {
 
     private static void registerEntityHitResult(EntityHitResult entityHitResult) {
         UUID newEntityUuid = entityHitResult.getEntity().getUUID();
-        if (null == currentEntityUuid || currentEntityUuid.equals(newEntityUuid)) {
+        if (null == currentEntityUuid || !currentEntityUuid.equals(newEntityUuid)) {
             currentEntityUuid = newEntityUuid;
             currentBlockPos = null;
             Network.sendToServer(new RegisterEntityNetworkMessage(newEntityUuid));
