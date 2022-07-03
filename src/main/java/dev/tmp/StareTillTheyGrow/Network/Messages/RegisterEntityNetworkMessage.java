@@ -9,7 +9,7 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class RegisterEntityNetworkMessage extends AbstractNetworkMessage {
+public class RegisterEntityNetworkMessage {
     private final UUID entityUuid;
 
     public RegisterEntityNetworkMessage(Entity entity) {
@@ -49,6 +49,6 @@ public class RegisterEntityNetworkMessage extends AbstractNetworkMessage {
             });
         }
 
-        supplierContext.get().setPacketHandled(true);
+        context.setPacketHandled(true);
     }
 }

@@ -1,12 +1,8 @@
 package dev.tmp.StareTillTheyGrow.Config;
 
-import com.google.common.collect.Lists;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Mod.EventBusSubscriber
 public class Config {
@@ -26,11 +22,47 @@ public class Config {
     }
 
     public static class Common {
-        // Defaults
+        // General
+        public ForgeConfigSpec.BooleanValue enableApplyBoneMeal;
+        public ForgeConfigSpec.BooleanValue enableFallInLove;
+        public ForgeConfigSpec.BooleanValue enableGrowUp;
+        public ForgeConfigSpec.BooleanValue enableRegrowCake;
+        public ForgeConfigSpec.BooleanValue enableRegrowWool;
+
+        // Timings
+        public ForgeConfigSpec.IntValue ticksDelay;
+        public ForgeConfigSpec.IntValue ticksBetween;
 
 
+        // Build the common config
         public Common ( ForgeConfigSpec.Builder builder ) {
-            // Build the common config
+            builder.comment("General Settings").push("general");
+            enableApplyBoneMeal = builder
+                    .comment("Enable staring at crops, saplings and alike to make them grow!")
+                    .define("general.enableApplyBoneMeal", true);
+            enableFallInLove = builder
+                    .comment("Enable staring Animals to make them fall in love!")
+                    .define("general.enableFallInLove", true);
+            enableGrowUp = builder
+                    .comment("Enable staring baby animals to make them grow up!")
+                    .define("general.enableGrowUp", true);
+            enableRegrowCake = builder
+                    .comment("Enable staring at cake, because it isn't a lie!")
+                    .define("general.enableRegrowCake", true);
+            enableRegrowWool = builder
+                    .comment("Enable staring at sheared sheep to make them regrow their wool!")
+                    .define("general.enableRegrowWool", true);
+            builder.pop();
+
+            builder.comment("Timing Settings").push("timing");
+            ticksDelay = builder
+                    .comment("The amount of ticks before we start trigger the actions")
+                    .defineInRange("timing.ticksDelay", 40, 1, Integer.MAX_VALUE);
+            ticksBetween = builder
+                    .comment("The amount of ticks between each action")
+                    .defineInRange("timing.ticksBetween", 10, 1, Integer.MAX_VALUE);
+            builder.pop();
+
             // TODO: [config] More organised config
             // TODO: [config] White/blacklist support for mods
             // TODO: [config] White/blacklist support for block groups

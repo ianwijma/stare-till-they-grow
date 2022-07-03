@@ -8,7 +8,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class RegisterBlockNetworkMessage extends AbstractNetworkMessage {
+public class RegisterBlockNetworkMessage {
 
     private final double x;
     private final double y;

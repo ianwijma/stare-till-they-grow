@@ -1,5 +1,6 @@
 package dev.tmp.StareTillTheyGrow.Dictionaries;
 
+import dev.tmp.StareTillTheyGrow.Config.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -7,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.Hashtable;
 import java.util.UUID;
+import java.util.function.BiConsumer;
 
 
 public class PlayerTargetDictionary {
@@ -29,9 +31,14 @@ public class PlayerTargetDictionary {
         DICTIONARY.remove(player);
     }
 
+    public static void forEach(BiConsumer<Player, PlayerTarget> consumer) {
+        DICTIONARY.forEach(consumer);
+    }
+
     public static abstract class PlayerTarget {
         protected final Player player;
         protected final ServerLevel dimension;
+        protected int internalTick = 0;
 
         public PlayerTarget(Player player, ServerLevel dimension) {
             this.player = player;
@@ -44,6 +51,14 @@ public class PlayerTargetDictionary {
 
         public ServerLevel getDimension() {
             return this.dimension;
+        }
+
+        public void tick() {
+            internalTick++;
+        }
+
+        public boolean canInvoke() {
+            return internalTick > Config.COMMON.ticksDelay.get() && internalTick % Config.COMMON.ticksBetween.get() == 0;
         }
     }
 

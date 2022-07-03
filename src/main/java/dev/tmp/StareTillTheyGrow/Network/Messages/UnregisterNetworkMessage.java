@@ -2,12 +2,13 @@ package dev.tmp.StareTillTheyGrow.Network.Messages;
 
 import dev.tmp.StareTillTheyGrow.Dictionaries.PlayerTargetDictionary;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
+import org.jetbrains.annotations.Contract;
 
 import java.util.function.Supplier;
 
-public class UnregisterNetworkMessage extends AbstractNetworkMessage {
+public class UnregisterNetworkMessage {
 
     public UnregisterNetworkMessage() {}
 
@@ -18,10 +19,17 @@ public class UnregisterNetworkMessage extends AbstractNetworkMessage {
     }
 
     public static void handle(final UnregisterNetworkMessage message, final Supplier<NetworkEvent.Context> supplierContext) {
-        handleMessage(message, supplierContext);
-    }
+        NetworkEvent.Context context = supplierContext.get();
 
-    static void handlePlayerMessage(final Object message, Player player){
-        PlayerTargetDictionary.unregister(player);
-    };
+        if (context.getDirection().getReceptionSide().isServer()) {
+            context.enqueueWork(() -> {
+                ServerPlayer player = context.getSender();
+                if (null != player) {
+                    PlayerTargetDictionary.unregister(player);
+                }
+            });
+        }
+
+        context.setPacketHandled(true);
+    }
 }

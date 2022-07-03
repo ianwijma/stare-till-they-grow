@@ -33,15 +33,15 @@ public class Network {
         INSTANCE.registerMessage(id++, UnregisterNetworkMessage.class, UnregisterNetworkMessage::encode, UnregisterNetworkMessage::decode, UnregisterNetworkMessage::handle);
     }
 
-    public static void toPlayer(ServerPlayer player, Object message) {
+    public static void sendToPlayer(ServerPlayer player, Object message) {
         INSTANCE.sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
-    public static void toPlayers(Object message) {
+    public static void sendToPlayers(Object message) {
         // TODO: Make work when needed.
     }
 
-    public static void toServer(Object message) {
+    public static void sendToServer(Object message) {
         INSTANCE.sendToServer(message);
     }
 }
