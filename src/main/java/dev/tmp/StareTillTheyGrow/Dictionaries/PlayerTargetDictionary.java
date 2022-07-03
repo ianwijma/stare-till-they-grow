@@ -18,10 +18,6 @@ public class PlayerTargetDictionary {
         DICTIONARY.put(player, new PlayerBlockTarget(player, dimension, position));
     }
 
-    public static void registerEntity(Player player, ServerLevel dimension, Entity entity) {
-        DICTIONARY.put(player, new PlayerEntityTarget(player, dimension, entity));
-    }
-
     public static void registerEntity(Player player, ServerLevel dimension, UUID entityUuid) {
         Entity entity = dimension.getEntity(entityUuid);
         DICTIONARY.put(player, new PlayerEntityTarget(player, dimension, entity));
