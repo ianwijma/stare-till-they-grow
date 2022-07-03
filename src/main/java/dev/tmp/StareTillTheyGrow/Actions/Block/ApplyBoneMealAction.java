@@ -16,6 +16,7 @@ public class ApplyBoneMealAction extends AbstractBlockAction {
             && bonemealableBlock.isValidBonemealTarget(dimension, blockPos, blockState, dimension.isClientSide)
         ) {
             bonemealableBlock.performBonemeal(dimension, dimension.random, blockPos, blockState);
+            emitParticles(blockPos);
         }
     }
 }

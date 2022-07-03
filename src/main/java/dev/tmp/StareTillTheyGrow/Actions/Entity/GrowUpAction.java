@@ -12,6 +12,7 @@ public class GrowUpAction extends AbstractEntityAction {
         if (entity instanceof Animal animal) {
             if (animal.isBaby()) {
                 animal.ageUp(60 * 5);
+                emitParticles(entity.position());
             }
         }
     }

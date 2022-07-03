@@ -15,6 +15,7 @@ public class RegrowCakeAction extends AbstractBlockAction {
             int bites = blockState.getValue(CakeBlock.BITES);
             if (bites > 0) {
                 dimension.setBlock(blockPos, blockState.setValue(CakeBlock.BITES, bites - 1), 3);
+                emitParticles(blockPos);
             }
         }
     }

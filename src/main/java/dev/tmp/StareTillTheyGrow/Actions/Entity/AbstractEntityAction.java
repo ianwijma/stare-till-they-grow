@@ -1,19 +1,14 @@
 package dev.tmp.StareTillTheyGrow.Actions.Entity;
 
-import dev.tmp.StareTillTheyGrow.Actions.ActionInterface;
-import dev.tmp.StareTillTheyGrow.Dictionaries.PlayerTargetDictionary;
-import net.minecraft.server.level.ServerLevel;
+import dev.tmp.StareTillTheyGrow.Actions.AbstractAction;
+import dev.tmp.StareTillTheyGrow.Dictionaries.PlayerTargetDictionary.PlayerEntityTarget;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
 
-abstract public class AbstractEntityAction implements ActionInterface {
-    protected ServerLevel dimension;
+abstract public class AbstractEntityAction extends AbstractAction {
     protected Entity entity;
-    protected Player player;
 
-    public AbstractEntityAction(PlayerTargetDictionary.PlayerEntityTarget playerEntityTarget) {
-        dimension = playerEntityTarget.getDimension();
+    public AbstractEntityAction(PlayerEntityTarget playerEntityTarget) {
+        super(playerEntityTarget);
         entity = playerEntityTarget.getTarget();
-        player = playerEntityTarget.getPlayer();
     }
 }

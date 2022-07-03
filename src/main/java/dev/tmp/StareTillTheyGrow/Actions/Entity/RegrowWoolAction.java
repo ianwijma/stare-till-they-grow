@@ -12,6 +12,7 @@ public class RegrowWoolAction extends AbstractEntityAction {
         if (entity instanceof Sheep sheep) {
             if (sheep.isSheared()) {
                 sheep.setSheared(false);
+                emitParticles(entity.position());
             }
         }
     }

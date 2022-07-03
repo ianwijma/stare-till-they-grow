@@ -14,6 +14,7 @@ public class FallInLoveAction extends AbstractEntityAction {
         if (entity instanceof Animal animal) {
             if (animal.getAge() == 0 && animal.canFallInLove()) {
                 animal.setInLove(player);
+                emitParticles(entity.position());
                 dimension.gameEvent(entity, GameEvent.ENTITY_INTERACT, new BlockPos(entity.position()));
             }
         }

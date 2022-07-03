@@ -1,19 +1,14 @@
 package dev.tmp.StareTillTheyGrow.Actions.Block;
 
-import dev.tmp.StareTillTheyGrow.Actions.ActionInterface;
-import dev.tmp.StareTillTheyGrow.Dictionaries.PlayerTargetDictionary;
+import dev.tmp.StareTillTheyGrow.Actions.AbstractAction;
+import dev.tmp.StareTillTheyGrow.Dictionaries.PlayerTargetDictionary.PlayerBlockTarget;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.player.Player;
 
-abstract public class AbstractBlockAction implements ActionInterface {
-    protected ServerLevel dimension;
+abstract public class AbstractBlockAction extends AbstractAction {
     protected BlockPos blockPos;
-    protected Player player;
 
-    public AbstractBlockAction(PlayerTargetDictionary.PlayerBlockTarget playerBlockTarget) {
-        dimension = playerBlockTarget.getDimension();
+    public AbstractBlockAction(PlayerBlockTarget playerBlockTarget) {
+        super(playerBlockTarget);
         blockPos = playerBlockTarget.getTarget();
-        player = playerBlockTarget.getPlayer();
     }
 }
