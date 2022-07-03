@@ -63,7 +63,6 @@ public class Config {
                     .defineInRange("timing.ticksBetween", 10, 1, Integer.MAX_VALUE);
             builder.pop();
 
-            // TODO: [config] More organised config
             // TODO: [config] White/blacklist support for mods
             // TODO: [config] White/blacklist support for block groups
             // TODO: [config] White/blacklist support for forge groups (crops for example)

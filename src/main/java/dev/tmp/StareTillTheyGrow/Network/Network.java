@@ -37,10 +37,6 @@ public class Network {
         INSTANCE.sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
-    public static void sendToPlayers(Object message) {
-        // TODO: Make work when needed.
-    }
-
     public static void sendToServer(Object message) {
         INSTANCE.sendToServer(message);
     }

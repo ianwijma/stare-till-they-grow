@@ -11,18 +11,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-// TODO: [network] Cleaner communication between server and client
-// TODO: [actions] More abstract handling of the server and client ticks
-// TODO: [actions] Tick based action instead of time based
-// TODO: [particles] Particles are not centered - Maybe custom particles
-// TODO: [config] More organised config
-// TODO: [config] White/blacklist support for mods
-// TODO: [config] White/blacklist support for block groups
-// TODO: [config] White/blacklist support for forge groups (crops for example)
-// TODO: [config/actions] Configurable delays for each mod / group / action
-
-// TODO: [research] Shifting enables alternative moves
-
 @Mod("staretilltheygrow")
 public class StareTillTheyGrow
 {
