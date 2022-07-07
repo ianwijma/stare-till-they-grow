@@ -11,7 +11,7 @@ public class RegrowCakeAction extends AbstractBlockAction {
 
     public void invoke() {
         BlockState blockState = dimension.getBlockState(blockPos);
-        if (blockState.getBlock() instanceof CakeBlock) {
+        if (!isBlocked && blockState.getBlock() instanceof CakeBlock) {
             int bites = blockState.getValue(CakeBlock.BITES);
             if (bites > 0) {
                 dimension.setBlock(blockPos, blockState.setValue(CakeBlock.BITES, bites - 1), 3);

@@ -12,7 +12,8 @@ public class ApplyBoneMealAction extends AbstractBlockAction {
     public void invoke() {
         BlockState blockState = dimension.getBlockState(blockPos);
         if (
-            blockState.getBlock() instanceof BonemealableBlock bonemealableBlock
+            !isBlocked
+            && blockState.getBlock() instanceof BonemealableBlock bonemealableBlock
             && bonemealableBlock.isValidBonemealTarget(dimension, blockPos, blockState, dimension.isClientSide)
         ) {
             bonemealableBlock.performBonemeal(dimension, dimension.random, blockPos, blockState);

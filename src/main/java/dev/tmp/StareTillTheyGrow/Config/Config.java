@@ -1,8 +1,12 @@
 package dev.tmp.StareTillTheyGrow.Config;
 
+import com.google.common.collect.Lists;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class Config {
@@ -22,6 +26,7 @@ public class Config {
     }
 
     public static class Common {
+
         // General
         public ForgeConfigSpec.BooleanValue enableApplyBoneMeal;
         public ForgeConfigSpec.BooleanValue enableFallInLove;
@@ -33,6 +38,12 @@ public class Config {
         public ForgeConfigSpec.IntValue ticksDelay;
         public ForgeConfigSpec.IntValue ticksBetween;
 
+        // filtering
+        public ForgeConfigSpec.BooleanValue isBlockList;
+        public ForgeConfigSpec.ConfigValue<List<? extends String>> blockOrAllowList;
+
+        // Filtering defaults
+        private static final ArrayList<String> defaultBlockOrAllowList = Lists.newArrayList("minecraft:grass_block", "minecraft:grass", "minecraft:fern");
 
         // Build the common config
         public Common ( ForgeConfigSpec.Builder builder ) {
@@ -57,16 +68,20 @@ public class Config {
             builder.comment("Timing Settings").push("timing");
             ticksDelay = builder
                     .comment("The amount of ticks before we start trigger the actions")
-                    .defineInRange("timing.ticksDelay", 40, 1, Integer.MAX_VALUE);
+                    .defineInRange("timing.ticksDelay", 20, 1, Integer.MAX_VALUE);
             ticksBetween = builder
                     .comment("The amount of ticks between each action")
                     .defineInRange("timing.ticksBetween", 10, 1, Integer.MAX_VALUE);
             builder.pop();
 
-            // TODO: [config] White/blacklist support for mods
-            // TODO: [config] White/blacklist support for block groups
-            // TODO: [config] White/blacklist support for forge groups (crops for example)
-            // TODO: [config/actions] Configurable delays for each mod / group / action
+            builder.comment("Filter Settings").push("filter");
+            isBlockList = builder
+                    .comment("If the filterList is a block or allow list")
+                    .define("filter.isBlockList", true);
+            blockOrAllowList = builder
+                    .comment("The block or allow list items")
+                    .defineList("filter.blockOrAllowList", defaultBlockOrAllowList, entry -> entry instanceof String);
+            builder.pop();
         }
     }
 
