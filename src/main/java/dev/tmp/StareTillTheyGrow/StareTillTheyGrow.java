@@ -16,6 +16,8 @@ public class StareTillTheyGrow
 {
     public static final String MOD_ID = "staretilltheygrow";
 
+    // TODO: Fix freezing upon open save > close > open save & overworld > nether > overworld
+
     public StareTillTheyGrow() {
         // Load the config
         ModLoadingContext.get().registerConfig( ModConfig.Type.COMMON, Config.COMMON_SPEC);
