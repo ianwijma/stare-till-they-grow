@@ -4,7 +4,6 @@ import dev.tmp.StareTillTheyGrow.Dictionaries.PlayerTargetDictionary;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import org.jetbrains.annotations.Contract;
 
 import java.util.function.Supplier;
 
