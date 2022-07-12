@@ -1,6 +1,7 @@
 package dev.tmp.StareTillTheyGrow.Dictionaries;
 
 import dev.tmp.StareTillTheyGrow.Config.Config;
+import dev.tmp.StareTillTheyGrow.Utilities.ForgeLogger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -15,15 +16,21 @@ public class PlayerTargetDictionary {
     private static final Hashtable<Player, PlayerTarget> DICTIONARY = new Hashtable<>();
 
     public static void registerBlock(Player player, ServerLevel dimension, BlockPos position) {
+        ForgeLogger.LOGGER.debug("[TARGET] register block");
+
         DICTIONARY.put(player, new PlayerBlockTarget(player, dimension, position));
     }
 
     public static void registerEntity(Player player, ServerLevel dimension, UUID entityUuid) {
+        ForgeLogger.LOGGER.debug("[TARGET] register entity");
+
         Entity entity = dimension.getEntity(entityUuid);
         DICTIONARY.put(player, new PlayerEntityTarget(player, dimension, entity));
     }
 
     public static void unregister(Player player) {
+        ForgeLogger.LOGGER.debug("[TARGET] unregister all");
+
         DICTIONARY.remove(player);
     }
 
