@@ -1,5 +1,6 @@
 package dev.tmp.StareTillTheyGrow.Actions.Entity;
 
+import dev.tmp.StareTillTheyGrow.Config.Config;
 import dev.tmp.StareTillTheyGrow.Dictionaries.PlayerTargetDictionary;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.animal.Animal;
@@ -10,13 +11,22 @@ public class FallInLoveAction extends AbstractEntityAction {
         super(playerEntityTarget);
     }
 
+    @Override
     public void invoke() {
-        if (entity instanceof Animal animal) {
-            if (animal.getAge() == 0 && animal.canFallInLove()) {
-                animal.setInLove(player);
-                emitParticles(entity.position());
-                dimension.gameEvent(entity, GameEvent.ENTITY_INTERACT, new BlockPos(entity.position()));
-            }
+        if (
+            isEnabledInConfig
+            && entity instanceof Animal animal
+            && animal.getAge() == 0
+            && animal.canFallInLove()
+        ) {
+            animal.setInLove(player);
+            emitParticles(entity.position());
+            dimension.gameEvent(entity, GameEvent.ENTITY_INTERACT, new BlockPos(entity.position()));
         }
+    }
+
+    @Override
+    protected boolean getIsEnabledInConfig() {
+        return Config.COMMON.enableFallInLove.get();
     }
 }

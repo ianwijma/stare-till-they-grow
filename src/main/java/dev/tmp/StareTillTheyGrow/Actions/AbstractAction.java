@@ -11,10 +11,15 @@ abstract public class AbstractAction implements ActionInterface {
     protected ServerLevel dimension;
     protected Player player;
 
+    protected boolean isEnabledInConfig;
+
     public AbstractAction(PlayerTarget playerTarget) {
         dimension = playerTarget.getDimension();
         player = playerTarget.getPlayer();
+        isEnabledInConfig = getIsEnabledInConfig();
     }
+
+    protected abstract boolean getIsEnabledInConfig();
 
     protected void emitParticles(BlockPos pos) {
         emitParticles(pos.getX(), pos.getY(), pos.getZ());
