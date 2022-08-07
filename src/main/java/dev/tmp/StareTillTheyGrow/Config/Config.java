@@ -43,7 +43,14 @@ public class Config {
         public ForgeConfigSpec.ConfigValue<List<? extends String>> blockOrAllowList;
 
         // Filtering defaults
-        private static final ArrayList<String> defaultBlockOrAllowList = Lists.newArrayList("minecraft:grass_block", "minecraft:grass", "minecraft:fern");
+        private static final ArrayList<String> defaultBlockOrAllowList = Lists.newArrayList(
+                "minecraft:grass_block",
+                "minecraft:grass",
+                "minecraft:fern",
+                "minecraft:netherrack",
+                "minecraft:warped_nylium",
+                "minecraft:crimson_nylium"
+        );
 
         // Build the common config
         public Common ( ForgeConfigSpec.Builder builder ) {
