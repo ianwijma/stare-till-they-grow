@@ -26,80 +26,69 @@ public class Config {
     }
 
     public static class Common {
-        // Defaults
-        private static final ArrayList<String> defaultBlackList = Lists.newArrayList( "minecraft:blocks/grass_block", "minecraft:blocks/grass" );
-        private static final ArrayList<String> defaultWhiteList = Lists.newArrayList();
 
-        // The growth delay
-        public ForgeConfigSpec.IntValue delay;
-        // The apply rate
-        public ForgeConfigSpec.IntValue everyXSeconds;
-        // Either use the blacklist of whitelist
-        public ForgeConfigSpec.BooleanValue shiftToActivate;
-        // Enable/disable bone meal effect
-        public ForgeConfigSpec.BooleanValue applyBoneMeal;
-        // Enable/disable growing of babies
-        public ForgeConfigSpec.BooleanValue growBabies;
-        // Enable/disable regrowing of wool
-        public ForgeConfigSpec.BooleanValue regrowWool;
-        // Enable/disable making animals fall in love
-        public ForgeConfigSpec.BooleanValue fallInLove;
-        // Enable/disable Making cake regrow pieces
-        public ForgeConfigSpec.BooleanValue cakeRegrowth;
-        // Either use the blacklist of whitelist
-        public ForgeConfigSpec.BooleanValue useBlackList;
-        // The blacklist
-        public ForgeConfigSpec.ConfigValue<List<? extends String>> blackList;
-        // The whitelist
-        public ForgeConfigSpec.ConfigValue<List<? extends String>> whiteList;
+        // General
+        public ForgeConfigSpec.BooleanValue enableApplyBoneMeal;
+        public ForgeConfigSpec.BooleanValue enableFallInLove;
+        public ForgeConfigSpec.BooleanValue enableGrowUp;
+        public ForgeConfigSpec.BooleanValue enableRegrowCake;
+        public ForgeConfigSpec.BooleanValue enableRegrowWool;
 
+        // Timings
+        public ForgeConfigSpec.IntValue ticksDelay;
+        public ForgeConfigSpec.IntValue ticksBetween;
+
+        // filtering
+        public ForgeConfigSpec.BooleanValue isBlockList;
+        public ForgeConfigSpec.ConfigValue<List<? extends String>> blockOrAllowList;
+
+        // Filtering defaults
+        private static final ArrayList<String> defaultBlockOrAllowList = Lists.newArrayList(
+                "minecraft:grass_block",
+                "minecraft:grass",
+                "minecraft:fern",
+                "minecraft:netherrack",
+                "minecraft:warped_nylium",
+                "minecraft:crimson_nylium"
+        );
+
+        // Build the common config
         public Common ( ForgeConfigSpec.Builder builder ) {
-            builder.comment("Delay and apply rate").push("timings");
-            delay = builder
-                    .comment("The delay in seconds before we start growing")
-                    .defineInRange("timing.delay", 2, 1, 60);
-
-            everyXSeconds = builder
-                    .comment("The time in seconds between each grow application")
-                    .defineInRange("timing.everyXSeconds", 1, 1, 60);
+            builder.comment("General Settings").push("general");
+            enableApplyBoneMeal = builder
+                    .comment("Enable staring at crops, saplings and alike to make them grow!")
+                    .define("general.enableApplyBoneMeal", true);
+            enableFallInLove = builder
+                    .comment("Enable staring Animals to make them fall in love!")
+                    .define("general.enableFallInLove", true);
+            enableGrowUp = builder
+                    .comment("Enable staring baby animals to make them grow up!")
+                    .define("general.enableGrowUp", true);
+            enableRegrowCake = builder
+                    .comment("Enable staring at cake, because it isn't a lie!")
+                    .define("general.enableRegrowCake", true);
+            enableRegrowWool = builder
+                    .comment("Enable staring at sheared sheep to make them regrow their wool!")
+                    .define("general.enableRegrowWool", true);
             builder.pop();
 
-            builder.comment("General settings").push("general");
-            shiftToActivate = builder
-                    .comment("If you need to hold shift (bend over) to activate your staring powers")
-                    .define("general.shiftToActivate", false);
-            applyBoneMeal = builder
-                    .comment("If staring at plants applies bone meal")
-                    .define("general.applyBoneMeal", true);
-            growBabies = builder
-                    .comment("If staring at baby animals makes them grow")
-                    .define("general.growBabies", true);
-            regrowWool = builder
-                    .comment("If staring at sheared sheep makes their wool grow back")
-                    .define("general.regrowWool", true);
-            fallInLove = builder
-                    .comment("If staring at a animal makes them fall in love")
-                    .define("general.fallInLove", true);
-            cakeRegrowth = builder
-                    .comment("If staring at cake makes it regrow pieces")
-                    .define("general.cakeRegrowth", true);
+            builder.comment("Timing Settings").push("timing");
+            ticksDelay = builder
+                    .comment("The amount of ticks before we start trigger the actions")
+                    .defineInRange("timing.ticksDelay", 20, 1, Integer.MAX_VALUE);
+            ticksBetween = builder
+                    .comment("The amount of ticks between each action")
+                    .defineInRange("timing.ticksBetween", 10, 1, Integer.MAX_VALUE);
             builder.pop();
 
-
-            builder.comment("blackList or whiteList settings").push("blacklistwhitelist");
-            useBlackList = builder
-                    .comment("You can choose to use either a blackList or a whiteList")
-                    .define("blackListWhiteList.useBlackList", true);
-
-            blackList = builder
-                    .comment("Disallow blocks to be stared at")
-                    .defineList("blackListWhiteList.blackList", defaultBlackList, entry -> entry instanceof String);
-
-            whiteList = builder
-                    .comment("Only allow certain blocks to be stared at")
-                    .defineList("blackListWhiteList.whiteList", defaultWhiteList, entry -> entry instanceof String);
+            builder.comment("Filter Settings").push("filter");
+            isBlockList = builder
+                    .comment("If the filterList is a block or allow list")
+                    .define("filter.isBlockList", true);
+            blockOrAllowList = builder
+                    .comment("The block or allow list items")
+                    .defineList("filter.blockOrAllowList", defaultBlockOrAllowList, entry -> entry instanceof String);
             builder.pop();
-
         }
     }
 

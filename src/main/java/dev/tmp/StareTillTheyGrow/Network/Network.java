@@ -1,8 +1,8 @@
 package dev.tmp.StareTillTheyGrow.Network;
 
-import dev.tmp.StareTillTheyGrow.Network.Message.RegisterBlock;
-import dev.tmp.StareTillTheyGrow.Network.Message.RegisterEntity;
-import dev.tmp.StareTillTheyGrow.Network.Message.Unregister;
+import dev.tmp.StareTillTheyGrow.Network.Messages.RegisterBlockNetworkMessage;
+import dev.tmp.StareTillTheyGrow.Network.Messages.RegisterEntityNetworkMessage;
+import dev.tmp.StareTillTheyGrow.Network.Messages.UnregisterNetworkMessage;
 import dev.tmp.StareTillTheyGrow.StareTillTheyGrow;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,7 +11,6 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 public class Network {
-
     // Protocol Version Constant
     private static final String PROTOCOL_VERSION = "1";
 
@@ -27,22 +26,18 @@ public class Network {
             PROTOCOL_VERSION::equals
     );
 
-    // Registers all messages
-    public static void init() {
+    public static void initialize() {
         int id = 0;
-        INSTANCE.registerMessage(id++, RegisterBlock.class, RegisterBlock::encode, RegisterBlock::decode, RegisterBlock::handle);
-        INSTANCE.registerMessage(id++, RegisterEntity.class, RegisterEntity::encode, RegisterEntity::decode, RegisterEntity::handle);
-        INSTANCE.registerMessage(id++, Unregister.class, Unregister::encode, Unregister::decode, Unregister::handle);
+        INSTANCE.registerMessage(id++, RegisterBlockNetworkMessage.class, RegisterBlockNetworkMessage::encode, RegisterBlockNetworkMessage::decode, RegisterBlockNetworkMessage::handle);
+        INSTANCE.registerMessage(id++, RegisterEntityNetworkMessage.class, RegisterEntityNetworkMessage::encode, RegisterEntityNetworkMessage::decode, RegisterEntityNetworkMessage::handle);
+        INSTANCE.registerMessage(id++, UnregisterNetworkMessage.class, UnregisterNetworkMessage::encode, UnregisterNetworkMessage::decode, UnregisterNetworkMessage::handle);
     }
 
-    // Sends a message from the server to a player
-    public static void sendTo(ServerPlayer player, Object msg) {
-        INSTANCE.sendTo(msg, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
+    public static void sendToPlayer(ServerPlayer player, Object message) {
+        INSTANCE.sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
-    // Sends a message from a player to the server
-    public static void sendToServer(Object msg) {
-        INSTANCE.sendToServer(msg);
+    public static void sendToServer(Object message) {
+        INSTANCE.sendToServer(message);
     }
-
 }
