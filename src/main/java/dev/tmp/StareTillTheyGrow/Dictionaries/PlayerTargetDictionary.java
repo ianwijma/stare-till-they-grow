@@ -29,7 +29,7 @@ public class PlayerTargetDictionary {
     }
 
     public static void unregister(Player player) {
-        ForgeLogger.LOGGER.debug("[TARGET] unregister all");
+        ForgeLogger.LOGGER.debug("[TARGET] unregister for player");
 
         DICTIONARY.remove(player);
     }
@@ -58,6 +58,11 @@ public class PlayerTargetDictionary {
 
         public void tick() {
             internalTick++;
+
+            // Too many ticks tracked, reset!
+            if (internalTick > 500000) {
+                internalTick = Config.COMMON.ticksDelay.get();
+            }
         }
 
         public boolean canInvoke() {

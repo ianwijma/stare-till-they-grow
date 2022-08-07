@@ -1,6 +1,7 @@
 package dev.tmp.StareTillTheyGrow;
 
 import dev.tmp.StareTillTheyGrow.Config.Config;
+import dev.tmp.StareTillTheyGrow.EventHandlers.PlayerLeaveEventHandler;
 import dev.tmp.StareTillTheyGrow.EventHandlers.ServerTickEventHandler;
 import dev.tmp.StareTillTheyGrow.Network.Network;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,6 +26,7 @@ public class StareTillTheyGrow
         // Register the server tick handler
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.register( new ServerTickEventHandler() );
+        forgeEventBus.register( new PlayerLeaveEventHandler() );
 
         // Initialize the Network class.
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
