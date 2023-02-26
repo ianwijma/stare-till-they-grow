@@ -1,7 +1,9 @@
 {
     "pack": {
         "description": "staretilltheygrow resources",
-        "pack_format": 6,
-        "_comment": "Just stare till they grow!!"
+        "_comment": "Just stare till they grow!!",
+        "pack_format": 12,
+        "forge:resource_pack_format": 12,
+        "forge:data_pack_format": 10
     }
 }
