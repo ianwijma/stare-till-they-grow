@@ -34,7 +34,7 @@ public class Network {
     }
 
     public static void sendToPlayer(ServerPlayer player, Object message) {
-        INSTANCE.sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
+        INSTANCE.sendTo(message, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void sendToServer(Object message) {

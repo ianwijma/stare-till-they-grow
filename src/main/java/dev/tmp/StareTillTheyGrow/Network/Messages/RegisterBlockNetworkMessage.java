@@ -28,8 +28,8 @@ public class RegisterBlockNetworkMessage {
         this.z = blockPos.getZ();
     }
 
-    public BlockPos getBlockPost() {
-        return new BlockPos(this.x, this.y, this.z);
+    public BlockPos getBlockPos() {
+        return new BlockPos((int) this.x, (int) this.y, (int) this.z);
     }
 
     public static void encode(RegisterBlockNetworkMessage message, FriendlyByteBuf buffer) {
@@ -55,7 +55,7 @@ public class RegisterBlockNetworkMessage {
                     PlayerTargetDictionary.registerBlock(
                             player,
                             player.getLevel(),
-                            message.getBlockPost()
+                            message.getBlockPos()
                     );
                 }
             });
